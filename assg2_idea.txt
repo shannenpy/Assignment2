@@ -1,0 +1,26 @@
+DRIVING CENTRE BOOKING
+
+nav bar:
+- homepage
+- location
+- review
+- pricing
+- contact
+- login/signup(?)
+
+homepage:
+- pic like vernon bugatti
+- passing rate
+- most popular package/license
+- location
+- contact
+
+pricing:
+- list licenses
+- respective prices
+- course details (no. of prac and theory)
+
+booking (after login):
+
+
+
