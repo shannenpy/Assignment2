@@ -1,6 +1,6 @@
 DRIVING CENTRE BOOKING
 
-nav bar:
+nav bar
 - homepage
 - location
 - review
@@ -8,19 +8,19 @@ nav bar:
 - contact
 - login/signup(?)
 
-homepage:
+homepage
 - pic like vernon bugatti
 - passing rate
 - most popular package/license
 - location
 - contact
 
-pricing:
+pricing
 - list licenses
 - respective prices
 - course details (no. of prac and theory)
 
-booking (after login):
+booking (after login)
+- 
 
-
-
+"Mr Low's suggestion: BBDC + Khan Academy" 
