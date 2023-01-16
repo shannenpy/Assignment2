@@ -18,9 +18,16 @@ homepage
 pricing
 - list licenses
 - respective prices
-- course details (no. of prac and theory)
+- course details (no. of prac and theory classes)
+
+------------------------------------------------------------------
+[for registered users only]
+academy
+- virtual/ video lessons (can be purchased -> ecomms)
+- practise quiz system
 
 booking (after login)
 - 
+------------------------------------------------------------------
 
-"Mr Low's suggestion: BBDC + Khan Academy" 
+Mr Low's suggestion: BBDC + Khan Academy
