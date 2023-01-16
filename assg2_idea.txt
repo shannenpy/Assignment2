@@ -36,3 +36,6 @@ booking (API)
 - upcoming lessons (date, car no., license type, instructor name)
 - history
 ------------------------------------------------------------------
+
+https://appointmentthing.com/docs/appointment-scheduling-api
+https://www.supersaas.com/info/dev/appointment_api
