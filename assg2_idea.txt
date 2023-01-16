@@ -3,7 +3,6 @@ DRIVING CENTRE BOOKING
 nav bar
 - homepage
 - location
-- review
 - pricing
 - contact
 - login/signup(?)
@@ -13,7 +12,7 @@ homepage
 - passing rate
 - most popular package/license
 - location
-- contact
+- contact (tel, social media, email etc.)
 
 pricing
 - list licenses
@@ -22,12 +21,18 @@ pricing
 
 ------------------------------------------------------------------
 [for registered users only]
-academy
-- virtual/ video lessons (can be purchased -> ecomms)
+nav bar
+- homepage
+- bookings 
+- academy
+- contact
+
+academy (API)
+- virtual/ video lessons (can be purchased -> ecomms) (youtube embed)
 - practise quiz system
 
-booking (after login)
-- 
+booking (API)
+- calendar (booked - grey, strikethrough(?)) (available timeslots, respective fees)
+- upcoming lessons (date, car no., license type, instructor name)
+- history
 ------------------------------------------------------------------
-
-Mr Low's suggestion: BBDC + Khan Academy
