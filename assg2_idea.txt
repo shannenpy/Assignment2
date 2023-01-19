@@ -39,3 +39,7 @@ booking (API)
 
 https://appointmentthing.com/docs/appointment-scheduling-api
 https://www.supersaas.com/info/dev/appointment_api
+
+
+THINGS TO DO: 
+- change font
