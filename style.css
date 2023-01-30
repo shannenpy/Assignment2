@@ -1,59 +1,79 @@
 /* ----- nav menu -----  */
 .main-navigation {
-    height: 80px;
-    width: 100%;
-    background: #101935;
-    position: fixed;
-    top: 0;
+	height: 80px;
+	width: 100%;
+	background: #101935;
+	position: sticky;
+	z-index: 10;
+	top: 0;
+	overflow: hidden;
 }
 .vertical-center {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
 }
 #logo {
-    width: 70px;
-    height: 70px;
-    margin-top: 5px;
-    padding: 0 50px;
+	width: 70px;
+	height: 70px;
+	margin-top: 5px;
+	padding: 0 50px;
 }
 #name {
-    font-size: 35px;
-    font-weight: bold;
-    color: #393D3F;
-    background-color: #F7CE72;
-    padding: 0 50px 0 50px;
-    text-decoration: none;
+	font-size: 35px;
+	font-weight: bold;
+	color: #393d3f;
+	background-color: #f7ce72;
+	padding: 0 50px 0 50px;
+	text-decoration: none;
 }
 .nav-ul {
-    float: right;
-    margin-right: 40px;
+	float: right;
+	margin-right: 40px;
 }
 .nav-li {
-    display: inline-block;
-    margin: 0 8px;
-    line-height: 80px;
+	display: inline-block;
+	margin: 0 8px;
+	line-height: 80px;
 }
 .nav-a {
-    color: #C5CBD3;
-    font-size: 18px;
-    text-decoration: none;
-    text-transform: uppercase;
-    border: 1px transparent;
-    padding: 7px 10px;
-    border-radius: 3px;
+	color: #c5cbd3;
+	font-size: 18px;
+	text-decoration: none;
+	text-transform: uppercase;
+	border: 1px transparent;
+	padding: 7px 10px;
+	border-radius: 3px;
 }
-.nav-a:active, .nav-a:hover {
-    border: 1px solid white;
+.nav-a:active,
+.nav-a:hover {
+	border: 1px solid white;
 }
 #icon {
-    color: white;
-    font-size: 30px;
-    line-height: 80px;
-    float: right;
-    margin-inline-start: 40px;
-    cursor: pointer;
-    display: none;
+	color: white;
+	font-size: 30px;
+	line-height: 80px;
+	float: right;
+	margin-inline-start: 40px;
+	cursor: pointer;
+	display: none;
+}
+
+/* ----- top-homepage -----  */
+.top {
+	width: fit-content;
+	max-height: calc(100vh - 80px);
+	overflow: hidden;
+}
+
+.top-homepage--image {
+	display: block;
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: bottom;
 }
