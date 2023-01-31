@@ -38,10 +38,9 @@ hpbg.setAttribute("class", "top-homepage--image");
 tophp.append(hpbg);
 let topContentDiv = document.createElement("div");
 homepage.append(topContentDiv);
-var tophpContent = `<a href = "pricing.html" class="top-homepage" id="find-out">Find out more here</a>
-<h1>Driving for Dummies</h1>
+var tophpContent = `<h1>Driving for Dummies</h1>
 <p>Here at Driving for Dummies, we want what's best for you. 
-We have over (number) course to choose from a license in class() to class(). 
+We have over (number) courses to choose from a license in class() to class(). 
 How are we different from other driving schools? 
 We want you to get the most of your money, so we have free videos and quizzes for you on top of the course you have paid for.
 Additionally, we want to give you the opportunity to take charge of your learning. 
