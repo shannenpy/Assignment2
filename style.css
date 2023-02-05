@@ -1,3 +1,9 @@
+:root {
+	--primary-color: #101935;
+	--secondary-color: #f7ce72;
+	--tertiary-color: #393d3f;
+}
+
 body {
 	font-family: "Epilogue", sans-serif;
 }
@@ -172,6 +178,82 @@ body {
 
 .show {
 	display: block;
+}
+
+/* login page */
+.login-form {
+	width: 450px;
+	padding: 1.5em 2em;
+	display: grid;
+	grid-template-areas:
+		"title"
+		"input"
+		"error"
+		"action";
+	grid-template-rows: 1fr 2fr 30px 40px;
+	background-color: var(--primary-color);
+	margin: auto;
+	border-radius: 5px;
+}
+
+.login-form h1 {
+	grid-area: title;
+	margin-bottom: 0.2em;
+	color: var(--secondary-color);
+}
+
+.login-form .input-container {
+	grid-area: input;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.login-form .error-message {
+	grid-area: error;
+	margin: 0;
+	color: #fff;
+	z-index: 99;
+}
+
+.login-form .form-btns {
+	grid-area: action;
+}
+
+.input-field input {
+	box-sizing: border-box;
+	width: 100%;
+	border: none;
+	border-bottom: #000 1px solid;
+	padding: 0.75em 0.5em;
+}
+
+.form-btns {
+	display: flex;
+	height: fit-content;
+}
+
+.form-btns * {
+	flex: 1 1 100%;
+	padding: 0.5em 0.25em;
+	border: solid white 2px;
+	color: var(--tertiary-color);
+	background-color: #fff;
+	cursor: pointer;
+}
+
+.form-btns :nth-child(1) {
+	border-right: solid rgba(240, 240, 240) 2px;
+}
+
+.form-btns *:hover {
+	color: var(--primary-color);
+	background-color: rgba(240, 240, 240);
+	border: solid rgba(240, 240, 240) 2px;
+}
+
+.form-btns *:focus {
+	border: solid blue 2px;
 }
 
 /* ----- mobile view -----  */
