@@ -1,5 +1,5 @@
 let backgroundImage = $(
-	`<image src="./13643.webp" class="background-image"></image>`
+	`<image src="../assets/images/13643.webp" class="background-image"></image>`
 );
 
 let form = $(`
@@ -94,13 +94,11 @@ $(document).ready(function () {
 			},
 		};
 		$(".loading-page").toggle();
-		let querySuccess = false;
 		$.ajax(settings).done(function (response) {
 			if (response?.length) {
-				querySuccess = true;
 				if (passwordInput == response[0]["password"]) {
-					$(".error-message").text("Login successful");
-					//Redirect to registered user page
+					sessionStorage.setItem("userId", response[0]["_id"]);
+					window.location.href = "./registered-user.html";
 				} else {
 					$(".error-message").text("Wrong password");
 				}

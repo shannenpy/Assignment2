@@ -67,7 +67,7 @@ let tophp = document.createElement("section");
 tophp.classList.add("top");
 homepage.append(tophp);
 let hpbg = document.createElement("img");
-hpbg.setAttribute("src", "./13643.webp");
+hpbg.setAttribute("src", "../assets/images/13643.webp");
 hpbg.setAttribute("alt", "Picture of Driving for Dummies");
 hpbg.setAttribute("class", "top-homepage--image");
 tophp.append(hpbg);
