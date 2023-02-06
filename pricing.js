@@ -14,7 +14,7 @@ motor.innerHTML = motorHeading
 let motorContent = document.createElement("div")
 motorContent.setAttribute("id", "motor-content") //to add class?
 motor.append(motorContent)
-const motorListContent = `<ul><li><button id="button-2">Class 2 (cylinder capacity (CC) of more than 400 cubic centimeters)</button></li>
+const motorListContent = `<ul><li><button id="button-2">Class 2</button></li>
 <li><a>Class 2A (less than 400CC)</a></li>
 <li><a>Class 2B (less than 200CC)</a></li></ul>
 <p id="motor-sidenote">note: You must have 2B license for a year before taking 2A test. 
@@ -51,12 +51,27 @@ busTruckContent.innerHTML = busTruckListContent
 
 /* ----- course details ----- */
 let courseDetails = document.createElement("section")
-courseDetails.classList.add("course-details")
+courseDetails.classList.add("license-course")
 document.body.append(courseDetails)
-const detailsHeading = `<h2 class="pricing-h2">Course Details<h2>`
+const detailsHeading = `<h2 class="pricing-h2">License and Course Details<h2>`
 courseDetails.innerHTML = detailsHeading
 // Class 2
 //if () and/or eventlistener
 let details2 = document.createElement("div")
-details2.setAttribute("class", "details-content")
+details2.setAttribute("class", "license-details-content")
+details2Content = `<ul id="license-content-2">
+<li>Big bikes</li>
+<li>Cylinder capacity of more than 400 U+33A4 cubic centimeters</li>
+</ul>
+
+<ul id="course-content-2">
+<li>S$2,227</li>
+<li>5 theory classes</li>
+<li>20 practical session</li>
+<li>*1 each* BTT/ FTT/ TP tests</li>
+</ul>`
+details2.innerHTML = details2Content
 document.getElementById("button-2").addEventListener("click", details2)
+
+// pricing note
+pricingNote = '<p>*prices are a rough estimate and assuming you pass all basic theory, advance theory and practical test the first time</p>'
