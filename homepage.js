@@ -91,19 +91,30 @@ homepage.append(passing);
 var passingContent = `<h2>Passing rates (on first try)</h2>
 `;
 
+$(window).ready(function () {
+	if ($(window).width() > 900) {
+		$("#name").text("Driving for Dummies");
+	} else {
+		$("#name").text("DFD");
+	}
+});
+
 function resetHamburger() {
 	$("#menu_checkbox").prop("checked", false);
 	$(".hamburger-overlay").hide();
 }
 // menu overlay
 $(document).ready(function () {
-	$("#menu_checkbox").click(function () {
-		$(".hamburger-overlay").toggle();
-	});
-
-	$(window).bind("resize", function () {
+	$(window).resize(function () {
 		if ($(window).width() > 900) {
 			resetHamburger();
+			$("#name").text("Driving for Dummies");
+		} else {
+			$("#name").text("DFD");
 		}
+	});
+
+	$("#menu_checkbox").click(function () {
+		$(".hamburger-overlay").toggle();
 	});
 });

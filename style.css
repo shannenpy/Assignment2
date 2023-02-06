@@ -181,6 +181,16 @@ body {
 }
 
 /* login page */
+.background-image {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	object-fit: cover;
+	object-position: center;
+	opacity: 0.85;
+}
+
 .login-form {
 	width: 450px;
 	padding: 1.5em 2em;
@@ -212,7 +222,7 @@ body {
 .login-form .error-message {
 	grid-area: error;
 	margin: 0;
-	color: #fff;
+	color: red;
 	z-index: 99;
 }
 
@@ -243,17 +253,42 @@ body {
 }
 
 .form-btns :nth-child(1) {
-	border-right: solid rgba(240, 240, 240) 2px;
+	border-right: solid green 1px;
 }
 
-.form-btns *:hover {
-	color: var(--primary-color);
-	background-color: rgba(240, 240, 240);
-	border: solid rgba(240, 240, 240) 2px;
+.form-btns :nth-child(2) {
+	border-left: solid red 1px;
 }
 
+.sign-in {
+	background-color: green;
+	color: white;
+	border-color: green;
+}
+
+.cancel {
+	background-color: red;
+	color: #fff;
+	border-color: red;
+}
+
+.form-btns *:hover,
 .form-btns *:focus {
-	border: solid blue 2px;
+	font-weight: bold;
+	border: solid white 2px;
+}
+
+.loading-page {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 999;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 /* ----- mobile view -----  */
