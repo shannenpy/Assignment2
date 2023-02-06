@@ -1,3 +1,55 @@
+/*----- nav menu -----*/
+let mainNav = document.createElement("nav");
+mainNav.classList.add("main-navigation");
+document.body.appendChild(mainNav);
+let mainnav = document.querySelector(".main-navigation");
+/*let logo = document.createElement("img")
+logo.setAttribute("src", "images/logo.png")
+logo.setAttribute("alt", "logo of The Digital Zone")
+logo.setAttribute("id", "logo")
+mainnav.append(logo)*/
+let company = document.createElement("label");
+company.classList.add("company");
+mainnav.append(company);
+const compName = `<a href = "index.html" id="name">Driving for Dummies</a>`;
+company.innerHTML = compName;
+let navList = document.createElement("ul");
+navList.classList.add("nav-ul");
+mainnav.append(navList);
+const navContent = `<a href = "pricing.html" class="nav-a"><li class="nav-li">Pricing</li></a>
+<a href = "contact.html" class="nav-a"><li class="nav-li">Contact Us</li></a>
+<a href = "location.html" class="nav-a"><li class="nav-li">Location</li></a>
+<a href = "login.html" class="nav-a"><li class="nav-li">Login</li></a>`;
+navList.innerHTML = navContent;
+
+const hamburger = `<input type="checkbox" id="menu_checkbox">
+<label for="menu_checkbox" id="menu_checkbox_label">
+  <div></div>
+  <div></div>
+  <div></div>
+</label>`;
+
+let navSmall = document.createElement("label");
+mainnav.append(navSmall);
+navSmall.innerHTML = hamburger;
+
+/* AppointmentThing widget */
+const apptThing = `
+<div
+	class="apptthingemb"
+	data-appt-url="iddrivingcentre"
+	data-appt-types="Fd19750,ZP19751,hE19752,IH19753,xh19754,cd19755"
+	data-page-text="000000"
+	data-page-link="0f5cff"
+	data-page-details="false"
+	data-emb-num="1"
+	style="width: 700px; margin: auto"
+>
+	<a href="https://appointmentthing.com" title="Appointment Scheduling">
+		Appointment Scheduling
+	</a>
+</div>`;
+
 /* ----- license list ----- */
 let licenseList = document.createElement("section")
 licenseList.classList.add("license-list")
