@@ -1,3 +1,10 @@
+// check if user is logged in
+const isLoggedIn = sessionStorage.getItem("user") ? true : false;
+if (!isLoggedIn) {
+} else {
+	window.location.href = "./registered-user.html";
+}
+
 let backgroundImage = $(
 	`<image src="../assets/images/13643.webp" class="background-image"></image>`
 );
@@ -97,7 +104,15 @@ $(document).ready(function () {
 		$.ajax(settings).done(function (response) {
 			if (response?.length) {
 				if (passwordInput == response[0]["password"]) {
-					sessionStorage.setItem("userId", response[0]["_id"]);
+					sessionStorage.setItem(
+						"user",
+						JSON.stringify({
+							id: response[0]["_id"],
+							firstName: response[0]["firstName"],
+							lastName: response[0]["lastName"],
+							credits: response[0]["credits"],
+						})
+					);
 					window.location.href = "./registered-user.html";
 				} else {
 					$(".error-message").text("Wrong password");

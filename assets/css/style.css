@@ -4,8 +4,15 @@
 	--tertiary-color: #393d3f;
 }
 
+html {
+	width: 100%;
+	height: 100%;
+}
+
 body {
 	font-family: "Epilogue", sans-serif;
+	width: 100%;
+	height: 100%;
 }
 
 /* ----- nav menu -----  */
