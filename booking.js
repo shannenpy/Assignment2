@@ -15,24 +15,26 @@ let { userID, firstName, lastName, credits } = JSON.parse(
 document.title = `${title} | ${firstName} ${lastName}`;
 
 // create navigation bar
-const pages = [
+let pages = [
 	{
-		name: "Booking",
-		url: "./booking.html",
+		name: "Pricing",
+		url: "./pricing.html",
 	},
 	{
 		name: "Contact Us",
-		url: "./contact.html",
+		url: "./contact-us.html",
 	},
 	{
-		name: "Location",
-		url: "./location.html",
+		name: "Booking",
+		url: "./booking.html",
 	},
 	{
 		name: "Logout",
 		url: "./",
 	},
 ];
+
+const currentPage = "Booking";
 
 $("<nav>", { class: "main-navigation" }).appendTo("body");
 $("<label>", { class: "company" }).appendTo(".main-navigation");
@@ -45,7 +47,12 @@ $("<a>", {
 $("<ul>", { class: "nav-ul" })
 	.append(function () {
 		return pages.map((page) => {
-			return `<a href = "${page.url}" class="nav-a"><li class="nav-li">${page.name}</li></a>`;
+			let isActive = page.name == currentPage ? true : false;
+			return `<a href = "${
+				isActive ? "#" : page.url
+			}" class="nav-a"><li class="nav-li ${isActive ? "active" : "inactive"}">${
+				page.name
+			}</li></a>`;
 		});
 	})
 	.appendTo(".main-navigation");
@@ -60,7 +67,9 @@ const hamburger = `<input type="checkbox" id="menu_checkbox">
   <div></div>
   <div></div>
 </label>`;
-$("<label>").append(hamburger).appendTo(".main-navigation");
+$("<label>", { class: "hamburger" })
+	.append(hamburger)
+	.appendTo(".main-navigation");
 
 $("<div>", { class: "homepage" }).appendTo("body");
 
@@ -73,7 +82,6 @@ $("<ul>")
 		});
 	})
 	.appendTo(".hamburger-overlay");
-$(".hamburger-overlay").hide();
 
 // create page body
 // create appointment widget
@@ -105,10 +113,11 @@ $(window).ready(function () {
 
 function resetHamburger() {
 	$("#menu_checkbox").prop("checked", false);
-	$(".hamburger-overlay").hide();
+	$("body").toggleClass("active");
 }
-// menu overlay
 $(document).ready(function () {
+	$("body").toggle();
+
 	$(window).resize(function () {
 		if ($(window).width() > 500) {
 			resetHamburger();
@@ -119,10 +128,21 @@ $(document).ready(function () {
 	});
 
 	$("#menu_checkbox").click(function () {
-		$(".hamburger-overlay").toggle();
+		$(".hamburger-overlay").toggleClass("active");
+		$("body").toggleClass("no-scroll");
 	});
 
 	$(".hamburger-overlay").click(function () {
 		resetHamburger();
+	});
+
+	$(function () {
+		$("a").click(function (e) {
+			e.preventDefault();
+			var link = $(this).attr("href");
+			setTimeout(function () {
+				window.location.href = link;
+			}, 500);
+		});
 	});
 });

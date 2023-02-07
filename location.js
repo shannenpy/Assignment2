@@ -6,7 +6,7 @@ const title = `Driving for Dummies`;
 document.title = `${title} | Location`;
 
 // create navigation bar
-const pages = [
+let pages = [
 	{
 		name: "Pricing",
 		url: "./pricing.html",
@@ -25,6 +25,8 @@ const pages = [
 	},
 ];
 
+const currentPage = "Location";
+
 $("<nav>", { class: "main-navigation" }).appendTo("body");
 $("<label>", { class: "company" }).appendTo(".main-navigation");
 $("<a>", {
@@ -36,7 +38,12 @@ $("<a>", {
 $("<ul>", { class: "nav-ul" })
 	.append(function () {
 		return pages.map((page) => {
-			return `<a href = "${page.url}" class="nav-a"><li class="nav-li">${page.name}</li></a>`;
+			let isActive = page.name == currentPage ? true : false;
+			return `<a href = "${
+				isActive ? "#" : page.url
+			}" class="nav-a"><li class="nav-li ${isActive ? "active" : "inactive"}">${
+				page.name
+			}</li></a>`;
 		});
 	})
 	.appendTo(".main-navigation");
@@ -66,7 +73,6 @@ $("<ul>")
 		});
 	})
 	.appendTo(".hamburger-overlay");
-$(".hamburger-overlay").hide();
 
 // create page body
 function loadMap() {
@@ -114,10 +120,11 @@ $(window).ready(function () {
 
 function resetHamburger() {
 	$("#menu_checkbox").prop("checked", false);
-	$(".hamburger-overlay").hide();
+	$("body").toggleClass("active");
 }
-// menu overlay
 $(document).ready(function () {
+	$("body").toggle();
+
 	$(window).resize(function () {
 		if ($(window).width() > 500) {
 			resetHamburger();
@@ -128,12 +135,22 @@ $(document).ready(function () {
 	});
 
 	loadMap();
-
 	$("#menu_checkbox").click(function () {
-		$(".hamburger-overlay").toggle();
+		$(".hamburger-overlay").toggleClass("active");
+		$("body").toggleClass("no-scroll");
 	});
 
 	$(".hamburger-overlay").click(function () {
 		resetHamburger();
+	});
+
+	$(function () {
+		$("a").click(function (e) {
+			e.preventDefault();
+			var link = $(this).attr("href");
+			setTimeout(function () {
+				window.location.href = link;
+			}, 500);
+		});
 	});
 });

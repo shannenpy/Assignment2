@@ -6,7 +6,7 @@ const title = `Driving for Dummies`;
 document.title = `${title}`;
 
 // create navigation bar
-const pages = [
+let pages = [
 	{
 		name: "Pricing",
 		url: "./pricing.html",
@@ -24,6 +24,7 @@ const pages = [
 		url: "./login.html",
 	},
 ];
+const currentPage = "Homepage";
 
 $("<nav>", { class: "main-navigation" }).appendTo("body");
 $("<label>", { class: "company" }).appendTo(".main-navigation");
@@ -36,7 +37,12 @@ $("<a>", {
 $("<ul>", { class: "nav-ul" })
 	.append(function () {
 		return pages.map((page) => {
-			return `<a href = "${page.url}" class="nav-a"><li class="nav-li">${page.name}</li></a>`;
+			let isActive = page.name == currentPage ? true : false;
+			return `<a href = "${
+				isActive ? "#" : page.url
+			}" class="nav-a"><li class="nav-li ${isActive ? "active" : "inactive"}">${
+				page.name
+			}</li></a>`;
 		});
 	})
 	.appendTo(".main-navigation");
@@ -66,38 +72,8 @@ $("<ul>")
 		});
 	})
 	.appendTo(".hamburger-overlay");
-$(".hamburger-overlay").hide();
 
 // create page body
-
-// top of homepage
-// let tophp = document.createElement("section");
-// tophp.classList.add("top");
-// homepage.append(tophp);
-// let hpbg = document.createElement("img");
-// hpbg.setAttribute("src", "../assets/images/13643.webp");
-// hpbg.setAttribute("alt", "Picture of Driving for Dummies");
-// hpbg.setAttribute("class", "top-homepage--image");
-// tophp.append(hpbg);
-// let topContentDiv = document.createElement("div");
-// topContentDiv.classList.add("top-content-div");
-// homepage.append(topContentDiv);
-// var tophpContent = `<a href = "pricing.html" class="top-homepage" id="find-out">Find out more here</a>
-// <h1>Driving for Dummies</h1>
-// <p>Here at Driving for Dummies, we want what's best for you.
-// We have over (number) course to choose from a license in class() to class().
-// How are we different from other driving schools?
-// We want you to get the most of your money, so we have free videos and quizzes for you on top of the course you have paid for.
-// Additionally, we want to give you the opportunity to take charge of your learning.
-// Hence, you have the option to choose your prefered instructors.</p>`;
-// topContentDiv.innerHTML = tophpContent;
-
-// // passing rates
-// let passing = document.createElement("section");
-// passing.classList.add("passing");
-// homepage.append(passing);
-// var passingContent = `<h2>Passing rates (on first try)</h2>
-// `;
 
 // listen for window resize
 $(window).ready(function () {
@@ -110,10 +86,12 @@ $(window).ready(function () {
 
 function resetHamburger() {
 	$("#menu_checkbox").prop("checked", false);
-	$(".hamburger-overlay").hide();
+	$("body").toggleClass("active");
 }
-// menu overlay
+
 $(document).ready(function () {
+	$("body").toggle();
+
 	$(window).resize(function () {
 		if ($(window).width() > 500) {
 			resetHamburger();
@@ -124,10 +102,21 @@ $(document).ready(function () {
 	});
 
 	$("#menu_checkbox").click(function () {
-		$(".hamburger-overlay").toggle();
+		$(".hamburger-overlay").toggleClass("active");
+		$("body").toggleClass("no-scroll");
 	});
 
 	$(".hamburger-overlay").click(function () {
 		resetHamburger();
+	});
+
+	$(function () {
+		$("a").click(function (e) {
+			e.preventDefault();
+			var link = $(this).attr("href");
+			setTimeout(function () {
+				window.location.href = link;
+			}, 500);
+		});
 	});
 });
