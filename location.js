@@ -1,36 +1,27 @@
 // check if user is logged in
 const isLoggedIn = sessionStorage.getItem("user") ? true : false;
 
-if (!isLoggedIn) {
-	window.location.href = "./login.html";
-}
-
 // set site name
 const title = `Driving for Dummies`;
-
-// retrieve user data from sessionStorage
-let { userID, firstName, lastName, credits } = JSON.parse(
-	sessionStorage.getItem("user")
-);
-document.title = `${title} | ${firstName} ${lastName}`;
+document.title = `${title} | Location`;
 
 // create navigation bar
 const pages = [
 	{
-		name: "Booking",
-		url: "./booking.html",
+		name: "Pricing",
+		url: "./pricing.html",
 	},
 	{
 		name: "Contact Us",
-		url: "./contact.html",
+		url: "./contact-us.html",
 	},
 	{
 		name: "Location",
 		url: "./location.html",
 	},
 	{
-		name: "Logout",
-		url: "./",
+		name: "Login",
+		url: "./login.html",
 	},
 ];
 
@@ -78,15 +69,39 @@ $("<ul>")
 $(".hamburger-overlay").hide();
 
 // create page body
-// welcome message
-$("<h2>", { class: "welcome" })
-	.append(`Welcome, ${firstName} ${lastName}`)
-	.appendTo(".homepage");
+function loadMap() {
+	$("<div>", { id: "mapContainer" }).appendTo(".homepage");
 
-// current profile details
-$("<div>", { class: "profile-details" })
-	.append(`<p>You currently have $${credits} in your account.</p>`)
-	.appendTo(".homepage");
+	const coordinates = { lng: 103.7777, lat: 1.3324 };
+	const address = "535 Clementi Rd, Singapore 599489";
+	// Initialize the platform object
+	var platform = new H.service.Platform({
+		apikey: "gKw5rlJJb7-AGl_6NkRnxN7qzy6_1Bvg4oeq5Blh8eo",
+	});
+
+	// Obtain the default map types from the platform object
+	var maptypes = platform.createDefaultLayers();
+
+	// Instantiate (and display) the map
+	var map = new H.Map($("#mapContainer")[0], maptypes.vector.normal.map, {
+		zoom: 15,
+		center: coordinates,
+	});
+
+	var ui = H.ui.UI.createDefault(map, maptypes);
+
+	// Create an info bubble object at a specific geographic location:
+	var bubble = new H.ui.InfoBubble(coordinates, {
+		content: `<b>${title} ${address}</b>`,
+	});
+
+	// Add info bubble to the UI:
+	ui.addBubble(bubble);
+
+	$(window).resize(function () {
+		map.getViewPort().resize();
+	});
+}
 
 // listen for window resize
 $(window).ready(function () {
@@ -111,6 +126,8 @@ $(document).ready(function () {
 			$("#name").text("DFD");
 		}
 	});
+
+	loadMap();
 
 	$("#menu_checkbox").click(function () {
 		$(".hamburger-overlay").toggle();

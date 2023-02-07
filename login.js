@@ -22,8 +22,8 @@ let form = $(`
     </div>
     <p class="error-message"></p>
     <div class="form-btns">
-		<button class="sign-in" tabindex="0">Sign In</button>
 		<button class="cancel" tabindex="0">Cancel</button>
+		<button class="sign-in" tabindex="0">Sign In</button>
 	</div>
 </form>`);
 
