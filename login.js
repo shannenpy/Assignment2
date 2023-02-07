@@ -129,58 +129,5 @@ $(document).ready(function () {
 	});
 
 	// not secure but oh well...
-	$(".sign-in").click(function (e) {
-		e.preventDefault();
-		$(".error-message").text("");
-		let emptyFields = false;
-		$(".input-field input").each(function () {
-			if (!$(this).val()) {
-				$(".error-message").text("Fields cannot be empty");
-				emptyFields = true;
-				return;
-			}
-		});
-		if (emptyFields) {
-			return;
-		}
-		if (!emailRegexp.test($(".input-email").val())) {
-			$(".error-message").text("Please enter a valid email address");
-			return;
-		}
-		let emailInput = $(".input-email").val();
-		let passwordInput = $(".input-password").val();
-		var settings = {
-			async: true,
-			crossDomain: true,
-			url: `https://drivingfd-b6f9.restdb.io/rest/registeredusers?q={"email": "${emailInput}"}`,
-			method: "GET",
-			headers: {
-				"content-type": "application/json",
-				"x-apikey": apikey,
-				"cache-control": "no-cache",
-			},
-		};
-		$(".loading-page").toggle();
-		$.ajax(settings).done(function (response) {
-			if (response?.length) {
-				if (passwordInput == response[0]["password"]) {
-					sessionStorage.setItem(
-						"user",
-						JSON.stringify({
-							id: response[0]["_id"],
-							firstName: response[0]["firstName"],
-							lastName: response[0]["lastName"],
-							credits: response[0]["credits"],
-						})
-					);
-					window.location.href = "./registered-user.html";
-				} else {
-					$(".error-message").text("Wrong password");
-				}
-			} else {
-				$(".error-message").text("Email not registered");
-			}
-			$(".loading-page").toggle();
-		});
-	});
+	$(".sign-in").click(userApi(e));
 });
