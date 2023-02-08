@@ -1,14 +1,10 @@
 :root {
-	/* --primary-color: #101935; */
-	/* --secondary-color: #f7ce72; */
-	/* --tertiary-color: #393d3f; */
-	/* --highlight-color: #0f5cff; */
-	--primary-color: #0f5cff;
+	--primary-color: #021048;
 	--secondary-color: #fff;
 	--tertiary-color: #c5cbd3;
 	--primary-font-color: #fff;
-	--secondary-font-color: #101935;
-	/* --hint-color: #d0d7de */
+	--secondary-font-color: #000;
+	--hint-color: #d0d7de;
 
 	--navbar-height: 80px;
 }
@@ -33,13 +29,17 @@ body {
 		"nav"
 		"homepage";
 	grid-template-rows: var(--navbar-height) 1fr;
+	background-image: url("../images/lexus.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 75% 100%;
 }
 
 /* ----- nav menu -----  */
 .main-navigation {
 	grid-area: nav;
 	width: 100%;
-	background: var(--primary-color);
+	/* background-color: var(--primary-color); */
 	position: sticky;
 	z-index: 10;
 	top: 0;
@@ -78,6 +78,7 @@ body {
 	transform: translate(20px, -10px);
 }
 
+#name.active:after,
 #name:hover:after {
 	border-bottom: solid var(--secondary-color) 3px;
 }
@@ -103,6 +104,8 @@ ul {
 }
 
 .nav-li {
+	text-align: center;
+	min-width: fit-content;
 	display: inline-block;
 	margin: 0 8px;
 	line-height: var(--navbar-height);
@@ -206,13 +209,17 @@ ul {
 	border-radius: 0;
 	padding: 0;
 	margin: 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	
 }
 
 .hamburger-overlay .nav-li {
 	color: var(--primary-color);
 	padding: 7px 0;
 	margin: 0;
-	width: 100%;
+	width: fit-content;
 	text-align: center;
 	position: relative;
 	z-index: 10;
@@ -220,9 +227,9 @@ ul {
 
 .hamburger-overlay .nav-li:after {
 	content: "";
-	width: 150px;
+	width: 100%;
 	height: 100%;
-	border-top: 5px solid var(--secondary-color);
+	border-top: 5px solid var(--primary-color);
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -233,7 +240,7 @@ ul {
 /* change hamburger menu background colour */
 .hamburger-overlay,
 .hamburger-overlay .nav-li {
-	background-color: #fff;
+	background-color: var(--secondary-color);
 }
 
 /* ----- top-homepage -----  */
@@ -255,11 +262,18 @@ ul {
 }
 
 .section {
+	min-width: 300px;
 	width: 100%;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	color: var(--secondary-font-color);
+}
+
+.section:not(#top, #login) {
+	background-color: var(--secondary-color);
 }
 
 /* pricing */
@@ -267,8 +281,6 @@ ul {
 	flex-direction: row;
 	justify-content: space-around;
 	align-items: start;
-	background-color: var(--secondary-color);
-	color: var(--secondary-font-color);
 	height: 100%;
 }
 
@@ -289,6 +301,7 @@ ul {
 	color: var(--secondary-font-color-color);
 }
 
+.pricing-btn.active, 
 .pricing-btn:hover {
 	background-color: var(--primary-color);
 	color: var(--primary-font-color);
@@ -320,13 +333,13 @@ ul {
 }
 
 .background-image {
+	display: none;
 	position: fixed;
 	width: 100%;
 	height: 100%;
 	z-index: -1;
 	object-fit: cover;
-	object-position: center;
-	opacity: 1;
+	object-position: 70% 100%;
 }
 
 .login-form {
@@ -483,5 +496,10 @@ ul {
 
 	.section#login {
 		background-color: var(--primary-color);
+		filter: blur(1px);
+	}
+
+	.login-form {
+		background-color: unset;
 	}
 }

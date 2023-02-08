@@ -1,4 +1,4 @@
-if (window.location.pathname == "/") {
+if (window.location.pathname != "/index.html") {
     window.location.pathname = "/index.html";
 }
 
@@ -11,6 +11,7 @@ function login() {
     );
     document.title += ` | ${firstName} ${lastName}`;
     registeredUser(userID, firstName, lastName, credits);
+	$("#name").attr("href", "#registered-user");
 }
 
 if (isLoggedIn) {
@@ -67,6 +68,7 @@ $("<nav>", { class: "main-navigation" }).appendTo("body");
 $("<label>", { class: "company" }).appendTo(".main-navigation");
 $("<a>", {
     href: `${isLoggedIn ? "#registered-user" : "#top"}`,
+	class: "active",
     id: "name",
 })
     .append(title)
@@ -80,7 +82,10 @@ $("#name").click(function () {
         $("#registered-user").hide();
         $("#top").show();
     }
+	resetHamburger()
     $(".main-navigation .nav-a").removeClass("active");
+	$(this).addClass("active");
+	console.log($(this))
 });
 
 $("<ul>", { class: "nav-ul" })
@@ -123,10 +128,7 @@ $("<label>", { class: "hamburger" })
     .appendTo(".main-navigation");
 
 $("<div>", { class: "homepage", id: "homepage" }).appendTo("body");
-let $backgroundImage = $(
-`<image src="../assets/images/lexus.jpg" class="background-image"></image>`
-);
-$(".homepage").append($backgroundImage);
+
 // create hamburger menu overlay
 $("<div>", { class: "hamburger-overlay" }).appendTo("body");
 $("<ul>").append(generateLinks()).appendTo(".hamburger-overlay");
@@ -162,6 +164,13 @@ $(`<div
 // #top
 $("<section>", { class: "section", id: "top" }).appendTo(".homepage");
 
+// image taken from 
+// https://www.hdcarwallpapers.com/2018_lexus_lc_500h_structural_blue_4k-wallpapers
+let $backgroundImage = $(
+	`<image src="../assets/images/lexus.jpg" class="background-image" alt="Picture of a blue Lexus"></image>`
+	);
+$("#top").append($backgroundImage);
+
 // #pricing
 $("<section>", { class: "section", id: "pricing" })
     .toggle()
@@ -191,8 +200,8 @@ fetch("./assets/json/licenses.json")
 		</div>`).appendTo(".license-list")
 	})
 	$(".pricing-btn").click(function () {
-		$(".pricing-btn").css({"color": "", "background-color": ""})
-		$(this).css({"color": "var(--primary-font-color)", "background-color": "var(--primary-color)"})
+		$(".pricing-btn").removeClass("active")
+		$(this).addClass("active")
 	});
 })
 
@@ -279,15 +288,6 @@ $(".cancel").click(function (e) {
     history.back() || (location.href = "./index.html");
 });
 
-function changeWindowBackground() {
-    if ($(window).width() < 500) {
-        $backgroundImage.hide();
-    } else {
-        $backgroundImage.show();
-    }
-}
-
-$(window).ready(changeWindowBackground());
 
 let emailRegexp = /\S+@\S+\.\S+/;
 const apikey = "63dfab573bc6b255ed0c46ae";
@@ -389,6 +389,7 @@ function registeredUser(userID, firstName, lastName, credits) {
 function logout() {
     sessionStorage.removeItem("user");
     isLoggedIn = false;
+	$("#name").attr("href", "#top")
     toggleLinks();
     $("#registered-user").hide();
     $("#top").show();
@@ -442,19 +443,13 @@ $(document).ready(function () {
     });
 
     $(".nav-a").click(function () {
+		$("#name").removeClass("active");
         $(".main-navigation .nav-a").removeClass("active");
         $(this).addClass("active");
     });
 
     $(window).resize(function () {
         changeTitle();
-
-        if ($(window).width() < 500) {
-            $backgroundImage.hide();
-        } else {
-            resetHamburger();
-            $backgroundImage.show();
-        }
     });
 
     $(window).keydown(function (e) {
