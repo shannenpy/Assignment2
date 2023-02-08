@@ -20,15 +20,18 @@ body {
 	width: 100%;
 	max-width: 100%;
 	height: 100%;
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	grid-template-areas:
+		"nav"
+		"homepage";
+	grid-template-rows: var(--navbar-height) 1fr;
 }
 
 /* ----- nav menu -----  */
 .main-navigation {
-	flex: 0 0 var(--navbar-height);
+	grid-area: nav;
 	width: 100%;
-	background: #101935;
+	background: var(--primary-color);
 	position: sticky;
 	z-index: 10;
 	top: 0;
@@ -80,13 +83,13 @@ ul {
 	font-weight: bold;
 }
 
-.nav-li.active {
+.nav-a.active {
 	color: var(--secondary-color);
 	cursor: default;
 }
 
-.nav-li.inactive:hover {
-	text-decoration: underline;
+.main-navigation .nav-a:not(.active):hover {
+	color: #fff;
 }
 
 /* hamburger */
@@ -209,31 +212,68 @@ ul {
 
 /* ----- top-homepage -----  */
 .homepage {
-	flex: 1 1 100%;
+	grid-area: homepage;
 	width: 100%;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	justify-content: center;
+	align-items: center;
+}
+
+.homepage.no-scroll {
+	height: 100%;
+	max-height: 100%;
+	overflow: hidden;
+	margin: 0;
 }
 
 .section {
 	width: 100%;
-	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding: 2em;
-	position: fixed;
 }
 
-.show {
-	display: block;
+.section:not(#top, #login) {
+	background-color: #fff;
+	min-width: 200px;
+	width: 90%;
+	max-width: 1500px;
+	height: 90%;
+	border-radius: 5px;
+	justify-content: center;
+	align-items: center;
+}
+
+/* .section:not(#location, #login) * {
+	width: 90%;
+	max-width: 900px;
+} */
+
+/* location */
+
+.section#location p {
+	text-align: center;
+}
+
+/* map */
+#mapContainer {
+	min-width: 200px;
+	width: 90%;
+	max-width: 700px;
+	height: 480px;
 }
 
 /* login page */
+.section#login {
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
 .background-image {
 	position: fixed;
 	width: 100%;
@@ -245,23 +285,24 @@ ul {
 }
 
 .login-form {
-	width: 450px;
-	padding: 1.5em 2em;
+	min-width: 300px;
+	width: 100%;
+	max-width: 500px;
+	padding: 1.75em;
 	display: grid;
 	grid-template-areas:
 		"title"
 		"input"
 		"error"
 		"action";
-	grid-template-rows: 1fr 2fr 30px 40px;
+	grid-template-rows: 1.5fr 3fr 30px 40px;
 	background-color: var(--primary-color);
-	margin: auto;
 	border-radius: 5px;
 }
 
 .login-form h1 {
 	grid-area: title;
-	margin-bottom: 0.2em;
+	margin: 0.2em 0 0.5em 0;
 	color: var(--secondary-color);
 }
 
@@ -270,6 +311,10 @@ ul {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
+}
+
+.input-field {
+	width: 100%;
 }
 
 .login-form .error-message {
@@ -344,6 +389,7 @@ ul {
 	align-items: center;
 }
 
+/* booking */
 /* appointmentThing */
 .apptthingembapptthingemb.isset {
 	min-width: 300px;
@@ -352,26 +398,13 @@ ul {
 	margin: 1em auto;
 }
 
-/* map */
-#mapContainer {
-	min-width: 200px;
-	width: 90%;
-	max-width: 700px;
-	height: 480px;
-}
-
-body.no-scroll {
-	height: 100%;
-	max-height: 100%;
-	overflow: hidden;
-	margin: 0;
+/* registered user */
+.profile-details #credits {
+	color: gold;
 }
 
 /* ----- mobile view -----  */
 @media (max-width: 500px) {
-	.homepage {
-		color: #fff;
-	}
 }
 
 @media (max-width: 1000px) {
@@ -398,5 +431,9 @@ body.no-scroll {
 
 	nav #icon {
 		display: block;
+	}
+
+	.section#login {
+		background-color: var(--primary-color);
 	}
 }

@@ -62,7 +62,6 @@ let pages = [
 		both: false,
 	},
 ];
-const currentPage = "Homepage";
 
 $("<nav>", { class: "main-navigation" }).appendTo("body");
 $("<label>", { class: "company" }).appendTo(".main-navigation");
@@ -72,27 +71,34 @@ $("<a>", {
 })
 	.append(title)
 	.appendTo(".company");
+
+$("#name").click(function () {
+	if (isLoggedIn) {
+		$("#registered-user").show();
+		$("#top").hide();
+	} else {
+		$("#registered-user").hide();
+		$("#top").show();
+	}
+	$(".main-navigation .nav-a").removeClass("active");
+});
+
 $("<ul>", { class: "nav-ul" })
 	.append(generateLinks())
 	.appendTo(".main-navigation");
 
 function generateLinks() {
 	return pages.map((page) => {
-		let isActive = page.name == currentPage ? true : false;
-		return `<a href = "${isActive ? "#" : page.url}" class = "nav-a" mBLI = ${
-			page.mustBeLoggedIn
-		} both = ${page.both}><li class = "nav-li ${
-			isActive ? "active" : "inactive"
-		}">${page.name}</li></a>`;
+		return `<a href = ${page.url} class = "nav-a" mBLI = ${page.mustBeLoggedIn} both = ${page.both}><li class = "nav-li">${page.name}</li></a>`;
 	});
 }
 
 function toggleLinks() {
 	$(".nav-a").each(function () {
+		// toggle display
 		$(this).hide();
 		let mustBeLoggedIn = $(this).attr("mBLI") == "true" ? true : false;
 		let both = $(this).attr("both") == "true" ? true : false;
-		console.log(`${this}: ${mustBeLoggedIn} ${both}`);
 		if (!isLoggedIn) {
 			if (!mustBeLoggedIn) {
 				$(this).show();
@@ -116,8 +122,11 @@ $("<label>", { class: "hamburger" })
 	.append(hamburger)
 	.appendTo(".main-navigation");
 
-$("<div>", { class: "homepage", id: "top" }).appendTo("body");
-
+$("<div>", { class: "homepage", id: "homepage" }).appendTo("body");
+let $backgroundImage = $(
+	`<image src="../assets/images/13643.webp" class="background-image"></image>`
+);
+$(".homepage").append($backgroundImage);
 // create hamburger menu overlay
 $("<div>", { class: "hamburger-overlay" }).appendTo("body");
 $("<ul>").append(generateLinks()).appendTo(".hamburger-overlay");
@@ -130,13 +139,56 @@ $(".nav-a[href='#top']").click(function () {
 
 // create page body
 
+//booking
+// create appointment widget
+/* AppointmentThing widget */
+$("<section>", { class: "section", id: "booking" })
+	.toggle()
+	.appendTo(".homepage");
+
+const apptThing = `<div
+			class="apptthingemb"
+			data-appt-url="iddrivingcentre"
+			data-appt-types="Fd19750,ZP19751,hE19752,IH19753,xh19754,cd19755"
+			data-page-text="000000"
+			data-page-link="0f5cff"
+			data-page-details="false"
+			data-emb-num="1"
+			style="width: 100%"
+		>
+		<p>Booking system is currently unavailable. Please try again later</p>
+		</div>`;
+$(`<div
+			class="apptthingemb"
+			data-appt-url="iddrivingcentre"
+			data-appt-types="Fd19750,ZP19751,hE19752,IH19753,xh19754,cd19755"
+			data-page-text="000000"
+			data-page-link="0f5cff"
+			data-page-details="false"
+			data-emb-num="1"
+		>
+		<p>Booking system is currently unavailable. Please try again later</p>
+		</div>`).appendTo("#booking");
+
+// #top
+$("<section>", { class: "section", id: "top" }).appendTo(".homepage");
+
 // #pricing
+$("<section>", { class: "section", id: "pricing" })
+	.toggle()
+	.appendTo(".homepage");
 // #contact-us
+$("<section>", { class: "section", id: "contact-us" })
+	.toggle()
+	.appendTo(".homepage");
 // #location
 function loadMap() {
 	$("<section>", { class: "section", id: "location" })
 		.toggle()
 		.appendTo(".homepage");
+	$("<p>")
+		.append("Map may take a while to load... Please be patient!")
+		.appendTo("#location");
 	$("<div>", { id: "mapContainer" }).appendTo("#location");
 
 	const coordinates = { lng: 103.7777, lat: 1.3324 };
@@ -178,10 +230,6 @@ $("<section>", { class: "section", id: "login" })
 	.toggle()
 	.appendTo(".homepage");
 
-let backgroundImage = $(
-	`<image src="../assets/images/13643.webp" class="background-image"></image>`
-);
-
 let form = $(`
 <form class="login-form">
 	<h1>Login</h1>
@@ -203,7 +251,7 @@ let form = $(`
 const loadingLottie = `<lottie-player src="https://assets1.lottiefiles.com/packages/lf20_p8bfn5to.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>`;
 const loadingPage = `<div class="loading-page">${loadingLottie}</div>`;
 
-$("#login").append(backgroundImage, form, loadingPage);
+$("#login").append(form, loadingPage);
 
 $(".loading-page").toggle();
 
@@ -214,18 +262,16 @@ $(".cancel").click(function (e) {
 
 function changeWindowBackground() {
 	if ($(window).width() < 500) {
-		backgroundImage.hide();
-		$("body").css({ "background-color": "var(--primary-color)" });
+		$backgroundImage.hide();
 	} else {
-		backgroundImage.show();
-		$("body").css({ "background-color": "" });
+		$backgroundImage.show();
 	}
 }
 
 $(window).ready(changeWindowBackground());
 
 let emailRegexp = /\S+@\S+\.\S+/;
-let apikey = "63dfab573bc6b255ed0c46ae";
+const apikey = "63dfab573bc6b255ed0c46ae";
 let query = {};
 function userApi(e) {
 	e.preventDefault();
@@ -279,10 +325,10 @@ function userApi(e) {
 		} else {
 			$(".error-message").text("Email not registered");
 		}
+		$(".loading-page").toggle();
 		isLoggedIn = true;
 		login();
 		toggleLinks();
-		$(".loading-page").toggle();
 	});
 }
 
@@ -298,7 +344,25 @@ function registeredUser(userID, firstName, lastName, credits) {
 
 	// current profile details
 	$("<div>", { class: "profile-details" })
-		.append(`<p>You currently have $${credits} in your account.</p>`)
+		.append(
+			`<p>You currently have <span id="credits">$${credits}</span> in your account.</p>`
+		)
+		.appendTo("#registered-user");
+
+	$("<p>")
+		.append(
+			`lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
+		)
+		.appendTo("#registered-user");
+	$("<p>")
+		.append(
+			`lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
+		)
+		.appendTo("#registered-user");
+	$("<p>")
+		.append(
+			`lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
+		)
 		.appendTo("#registered-user");
 }
 
@@ -326,7 +390,7 @@ function changeTitle() {
 function resetHamburger() {
 	$("#menu_checkbox").prop("checked", false);
 	$(".hamburger-overlay").removeClass("active");
-	$("body").toggleClass("active");
+	$("body").removeClass("no-scroll");
 }
 
 function toggleHamburgerMenu() {
@@ -349,27 +413,27 @@ $(document).ready(function () {
 		resetHamburger();
 	});
 
-	$(function () {
-		$("a").click(function (e) {
-			e.preventDefault();
-			toggleLinks();
-			var link = $(this).attr("href");
-			$(".section").hide();
-			$(link).show();
-		});
+	$("a").click(function (e) {
+		e.preventDefault();
+		var link = $(this).attr("href");
+		toggleLinks();
+		$(".section").hide();
+		$(link).show();
+	});
+
+	$(".nav-a").click(function () {
+		$(".main-navigation .nav-a").removeClass("active");
+		$(this).addClass("active");
 	});
 
 	$(window).resize(function () {
 		changeTitle();
 
 		if ($(window).width() < 500) {
-			backgroundImage.hide();
-			$("body").css({ "background-color": "var(--primary-color)" });
+			$backgroundImage.hide();
 		} else {
 			resetHamburger();
-
-			backgroundImage.show();
-			$("body").css({ "background-color": "" });
+			$backgroundImage.show();
 		}
 	});
 
