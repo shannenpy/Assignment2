@@ -1,5 +1,23 @@
+if (window.location.pathname == "/") {
+	window.location.pathname = "/index.html";
+}
+
 // check if user is logged in
-const isLoggedIn = sessionStorage.getItem("user") ? true : false;
+let isLoggedIn = sessionStorage.getItem("user") ? true : false;
+
+function login() {
+	let { userID, firstName, lastName, credits } = JSON.parse(
+		sessionStorage.getItem("user")
+	);
+	document.title += ` | ${firstName} ${lastName}`;
+	registeredUser(userID, firstName, lastName, credits);
+}
+
+if (isLoggedIn) {
+	login();
+}
+
+toggleLinks();
 
 // set site name
 const title = `Driving for Dummies`;
@@ -8,20 +26,40 @@ document.title = `${title}`;
 // create navigation bar
 let pages = [
 	{
+		name: "Booking",
+		url: "#booking",
+		mustBeLoggedIn: true,
+		both: false,
+	},
+	{
 		name: "Pricing",
 		url: "#pricing",
+		mustBeLoggedIn: false,
+		both: true,
 	},
 	{
 		name: "Contact Us",
 		url: "#contact-us",
+		mustBeLoggedIn: false,
+		both: true,
 	},
 	{
 		name: "Location",
 		url: "#location",
+		mustBeLoggedIn: false,
+		both: false,
 	},
 	{
 		name: "Login",
 		url: "#login",
+		mustBeLoggedIn: false,
+		both: false,
+	},
+	{
+		name: "Logout",
+		url: "#top",
+		mustBeLoggedIn: true,
+		both: false,
 	},
 ];
 const currentPage = "Homepage";
@@ -35,20 +73,37 @@ $("<a>", {
 	.append(title)
 	.appendTo(".company");
 $("<ul>", { class: "nav-ul" })
-	.append(function () {
-		return pages.map((page) => {
-			let isActive = page.name == currentPage ? true : false;
-			return `<a href = "${
-				isActive ? "#" : page.url
-			}" class="nav-a"><li class="nav-li ${isActive ? "active" : "inactive"}">${
-				page.name
-			}</li></a>`;
-		});
-	})
+	.append(generateLinks())
 	.appendTo(".main-navigation");
-$(".nav-a:last-child").click(function () {
-	sessionStorage.removeItem("user");
-});
+
+function generateLinks() {
+	return pages.map((page) => {
+		let isActive = page.name == currentPage ? true : false;
+		return `<a href = "${isActive ? "#" : page.url}" class = "nav-a" mBLI = ${
+			page.mustBeLoggedIn
+		} both = ${page.both}><li class = "nav-li ${
+			isActive ? "active" : "inactive"
+		}">${page.name}</li></a>`;
+	});
+}
+
+function toggleLinks() {
+	$(".nav-a").each(function () {
+		$(this).hide();
+		let mustBeLoggedIn = $(this).attr("mBLI") == "true" ? true : false;
+		let both = $(this).attr("both") == "true" ? true : false;
+		console.log(`${this}: ${mustBeLoggedIn} ${both}`);
+		if (!isLoggedIn) {
+			if (!mustBeLoggedIn) {
+				$(this).show();
+			}
+		} else {
+			if (mustBeLoggedIn || (!mustBeLoggedIn && both)) {
+				$(this).show();
+			}
+		}
+	});
+}
 
 // create hamburger menu
 const hamburger = `<input type="checkbox" id="menu_checkbox">
@@ -65,13 +120,13 @@ $("<div>", { class: "homepage", id: "top" }).appendTo("body");
 
 // create hamburger menu overlay
 $("<div>", { class: "hamburger-overlay" }).appendTo("body");
-$("<ul>")
-	.append(function () {
-		return pages.map((page) => {
-			return `<a href = "${page.url}" class="nav-a"><li class="nav-li">${page.name}</li></a>`;
-		});
-	})
-	.appendTo(".hamburger-overlay");
+$("<ul>").append(generateLinks()).appendTo(".hamburger-overlay");
+
+toggleLinks();
+
+$(".nav-a[href='#top']").click(function () {
+	logout();
+});
 
 // create page body
 
@@ -114,6 +169,9 @@ function loadMap() {
 		map.getViewPort().resize();
 	});
 }
+
+// Load the map
+loadMap();
 
 // #login
 $("<section>", { class: "section", id: "login" })
@@ -160,6 +218,7 @@ function changeWindowBackground() {
 		$("body").css({ "background-color": "var(--primary-color)" });
 	} else {
 		backgroundImage.show();
+		$("body").css({ "background-color": "" });
 	}
 }
 
@@ -220,6 +279,9 @@ function userApi(e) {
 		} else {
 			$(".error-message").text("Email not registered");
 		}
+		isLoggedIn = true;
+		login();
+		toggleLinks();
 		$(".loading-page").toggle();
 	});
 }
@@ -239,18 +301,31 @@ function registeredUser(userID, firstName, lastName, credits) {
 		.append(`<p>You currently have $${credits} in your account.</p>`)
 		.appendTo("#registered-user");
 }
+
+//logout
+function logout() {
+	sessionStorage.removeItem("user");
+	isLoggedIn = false;
+	toggleLinks();
+	$("#registered-user").hide();
+	$("#top").show();
+}
+
+$("#logout").click(logout());
+
 // listen for window resize
-$(document).ready(function () {
+function changeTitle() {
 	if ($(window).width() > 500) {
 		$("#name").text(title);
 	} else {
 		$("#name").text("DFD");
 	}
-});
+}
 
 // hamburger controls
 function resetHamburger() {
 	$("#menu_checkbox").prop("checked", false);
+	$(".hamburger-overlay").removeClass("active");
 	$("body").toggleClass("active");
 }
 
@@ -260,14 +335,7 @@ function toggleHamburgerMenu() {
 }
 
 $(document).ready(function () {
-	$(window).resize(function () {
-		if ($(window).width() > 500) {
-			resetHamburger();
-			$("#name").text(title);
-		} else {
-			$("#name").text("DFD");
-		}
-	});
+	changeTitle();
 
 	$("#menu_checkbox").click(function () {
 		toggleHamburgerMenu();
@@ -284,22 +352,24 @@ $(document).ready(function () {
 	$(function () {
 		$("a").click(function (e) {
 			e.preventDefault();
-			$(".section").hide();
+			toggleLinks();
 			var link = $(this).attr("href");
+			$(".section").hide();
 			$(link).show();
 		});
 	});
 
-	// Location - load map
-	loadMap();
-
-	//Login
 	$(window).resize(function () {
+		changeTitle();
+
 		if ($(window).width() < 500) {
 			backgroundImage.hide();
 			$("body").css({ "background-color": "var(--primary-color)" });
 		} else {
+			resetHamburger();
+
 			backgroundImage.show();
+			$("body").css({ "background-color": "" });
 		}
 	});
 
@@ -311,16 +381,4 @@ $(document).ready(function () {
 
 	// not secure but oh well...
 	$(".sign-in").click((e) => userApi(e));
-
-	// logout
-	if (isLoggedIn) {
-		let { userID, firstName, lastName, credits } = JSON.parse(
-			sessionStorage.getItem("user")
-		);
-		document.title += ` | ${firstName} ${lastName}`;
-		registeredUser(userID, firstName, lastName, credits);
-		$(".nav-a:last-child").click(function () {
-			sessionStorage.removeItem("user");
-		});
-	}
 });

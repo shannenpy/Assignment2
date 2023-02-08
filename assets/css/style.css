@@ -225,6 +225,8 @@ ul {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	padding: 2em;
+	position: fixed;
 }
 
 .show {
@@ -356,7 +358,6 @@ ul {
 	width: 90%;
 	max-width: 700px;
 	height: 480px;
-	margin: 2em 0;
 }
 
 body.no-scroll {
@@ -367,6 +368,12 @@ body.no-scroll {
 }
 
 /* ----- mobile view -----  */
+@media (max-width: 500px) {
+	.homepage {
+		color: #fff;
+	}
+}
+
 @media (max-width: 1000px) {
 	.main-navigation {
 		justify-content: center;
