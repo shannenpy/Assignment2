@@ -1,7 +1,14 @@
 :root {
-	--primary-color: #101935;
-	--secondary-color: #f7ce72;
-	--tertiary-color: #393d3f;
+	/* --primary-color: #101935; */
+	/* --secondary-color: #f7ce72; */
+	/* --tertiary-color: #393d3f; */
+	/* --highlight-color: #0f5cff; */
+	--primary-color: #0f5cff;
+	--secondary-color: #fff;
+	--tertiary-color: #c5cbd3;
+	--primary-font-color: #fff;
+	--secondary-font-color: #101935;
+	/* --hint-color: #d0d7de */
 
 	--navbar-height: 80px;
 }
@@ -17,6 +24,7 @@ html {
 
 body {
 	font-family: "Epilogue", sans-serif;
+	color: var(--primary-font-color);
 	width: 100%;
 	max-width: 100%;
 	height: 100%;
@@ -55,10 +63,28 @@ body {
 	padding: 0.25em 0.5em;
 	text-decoration: none;
 	display: inline-block;
+	position: relative;
+}
+
+#name:after {
+	content: "";
+	width: 90%;
+	height: 3px;
+	border-bottom: solid var(--tertiary-color) 3px;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	z-index: -1;
+	transform: translate(20px, -10px);
+}
+
+#name:hover:after {
+	border-bottom: solid var(--secondary-color) 3px;
 }
 
 ul {
 	margin: 0;
+	list-style-type: none;
 }
 
 .nav-ul {
@@ -236,24 +262,43 @@ ul {
 	align-items: center;
 }
 
-.section:not(#top, #login) {
-	background-color: #fff;
-	min-width: 200px;
-	width: 90%;
-	max-width: 1500px;
-	height: 90%;
-	border-radius: 5px;
-	justify-content: center;
-	align-items: center;
+/* pricing */
+.section#pricing {
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: start;
+	background-color: var(--secondary-color);
+	color: var(--secondary-font-color);
+	height: 100%;
 }
 
-/* .section:not(#location, #login) * {
-	width: 90%;
-	max-width: 900px;
-} */
+.license-ul {
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+}
+
+.pricing-btn {
+	font-weight: bold;
+	cursor: pointer;
+	border: none;
+	border-radius: 2px;
+	padding: 0.5em 0.75em;
+	margin-right: 1em;
+	background-color: var(--tertiary-color);
+	color: var(--secondary-font-color-color);
+}
+
+.pricing-btn:hover {
+	background-color: var(--primary-color);
+	color: var(--primary-font-color);
+}
+
+.side-note {
+	font-size: 0.8em;
+}
 
 /* location */
-
 .section#location p {
 	text-align: center;
 }
@@ -281,7 +326,7 @@ ul {
 	z-index: -1;
 	object-fit: cover;
 	object-position: center;
-	opacity: 0.85;
+	opacity: 1;
 }
 
 .login-form {
@@ -404,9 +449,6 @@ ul {
 }
 
 /* ----- mobile view -----  */
-@media (max-width: 500px) {
-}
-
 @media (max-width: 1000px) {
 	.main-navigation {
 		justify-content: center;
@@ -423,6 +465,12 @@ ul {
 
 	#name {
 		text-align: center;
+		padding: 0;
+	}
+
+	#name:after {
+		width: 100%;
+		transform: translateY(1%);
 	}
 
 	.nav-ul {

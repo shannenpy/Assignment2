@@ -1,0 +1,26 @@
+[
+    {
+        "type": "Invalid carriages",
+        "heading": "Invalid carriages",
+        "classes": ["1"],
+        "sidenote": "Class 1 license is only issued to people with disabilities."
+    },
+    {
+        "type": "Motorcycle",
+        "heading": "For all motorcycles",
+        "classes": ["2", "2A", "2B"],
+        "sidenote": "You must have 2B license for a year before taking 2A test. You must also have 2A license for a year before taking Class 2 test."
+    },
+    {
+        "type": "Car",
+        "heading": "Vehicles that can carry up to 7 people. Vehicles with unladen weight not exceeding 2,500 kg",
+        "classes": ["3", "3A", "3C", "3CA"],
+        "sidenote": ""
+    },
+    {
+        "type": "Others",
+        "heading": "Buses, Trucks etc.",
+        "classes": ["4"],
+        "sidenote": "Class 4A licenses are only for poeple who drive public buses."
+    }
+]
