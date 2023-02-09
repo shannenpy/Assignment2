@@ -27,6 +27,12 @@ document.title = `${title}`;
 // create navigation bar
 let pages = [
 	{
+		name: "Academy",
+		url: "#academy",
+		mustBeLoggedIn: true,
+		both: false,
+	},
+	{
 		name: "Booking",
 		url: "#booking",
 		mustBeLoggedIn: true,
@@ -140,7 +146,248 @@ $(".nav-a[href='#top']").click(function () {
 
 // create page body
 
-//booking
+// academy
+$("<section>", { class: "section", id: "academy" })
+	.toggle()
+	.appendTo(".homepage");
+
+$("<div>", { class: "quiz" }).appendTo("#academy");
+$("<div>", { class: "quiz-header" }).appendTo(".quiz");
+$("<h1>", { class: "quiz-name" }).append(`Quiz`).appendTo(".quiz-header");
+$("<button>", { class: "quiz-btn quiz-btn-retry" })
+	.append("Retry")
+	.appendTo(".quiz-header");
+$("<div>", { class: "quiz-progress" }).appendTo(".quiz-header");
+$("<div>", { class: "quiz-progress-bar" }).appendTo(".quiz-progress");
+$("<div>", { class: "quiz-progress-bar-fill" }).appendTo(".quiz-progress-bar");
+$("<div>", { class: "quiz-progress-text" }).appendTo(".quiz-progress");
+$("<div>", { class: "quiz-body" }).appendTo(".quiz");
+$("<div>", { class: "quiz-results" }).toggle().appendTo(".quiz");
+$("<p>", { class: "quiz-results-text" }).appendTo(".quiz-results");
+$("<button>", { class: "quiz-btn quiz-btn-results" })
+	.append("Results")
+	.appendTo(".quiz-results");
+$("<div>", { class: "quiz-footer" }).appendTo(".quiz");
+$("<button>", { class: "quiz-btn quiz-btn-prev" })
+	.append("Previous")
+	.toggle()
+	.appendTo(".quiz-footer");
+$("<button>", { class: "quiz-btn quiz-btn-next" })
+	.append("Next")
+	.appendTo(".quiz-footer");
+$("<button>", { class: "quiz-btn quiz-btn-submit" })
+	.append("Submit")
+	.toggle()
+	.appendTo(".quiz-footer");
+
+const quizLength = 10; // number of questions per quiz
+let questions = [];
+$.ajax({
+	url: "../assets/json/questions.json",
+	success: function (result) {
+		questions = result;
+		currentQuestion = 0;
+		resetQuiz();
+		generateQuiz(questions);
+	},
+}).done(function () {
+	$(".quiz-answer").click(function () {
+		if ($(this).hasClass("selected")) {
+			$(this).removeClass("selected");
+			$(".quiz-btn-next").addClass("inactive");
+		} else {
+			$(this).siblings().removeClass("selected");
+			$(this).toggleClass("selected");
+			$(".quiz-btn-next").removeClass("inactive");
+		}
+	});
+
+	$(".quiz-btn-next").click(function () {
+		if ($(".quiz-answer.selected").length) {
+			$(".quiz-question").hide();
+			$(".quiz-question")
+				.eq(currentQuestion + 1)
+				.show();
+			currentQuestion++;
+			if (currentQuestion == $(".quiz-question").length - 1) {
+				$(".quiz-btn-next").hide();
+				$(".quiz-btn-submit").show();
+			}
+			$(".quiz-btn-prev").show();
+
+			updateProgress();
+		}
+		$(this).addClass("inactive");
+	});
+
+	$(".quiz-btn-prev").click(function () {
+		$(".quiz-question").hide();
+		$(".quiz-question")
+			.eq(currentQuestion - 1)
+			.show();
+		currentQuestion--;
+		if (currentQuestion == 0) {
+			$(".quiz-btn-prev").hide();
+		}
+		$(".quiz-btn-next").show();
+		$(".quiz-btn-submit").hide();
+		updateProgress();
+	});
+
+	// submit quiz
+	$(".quiz-btn-submit").click(function () {
+		$(".quiz-question").hide();
+		$(".quiz-btn-next").hide();
+		$(".quiz-btn-prev").hide();
+		$(".quiz-btn-submit").hide();
+
+		$(".quiz-progress-bar-fill").css("width", "100%");
+		$(".quiz-progress-text").text("100%");
+
+		// show results
+		let correct = 0;
+		$(".quiz-question").each(function (index) {
+			if (
+				$(this).data("correct") ==
+				$(this).find(".quiz-answer.selected").text().slice(3)
+			) {
+				$(this).find(".quiz-answer.selected").addClass("correct");
+				correct++;
+			} else {
+				$(this).find(".quiz-answer.selected").addClass("incorrect");
+				// not working
+				$(this)
+					.find(".quiz-answer")
+					.each(function () {
+						if (
+							$(this).text().slice(3) == $(this).parents().eq(1).data("correct")
+						) {
+							$(this).addClass("correct");
+						}
+					});
+			}
+		});
+		$(".quiz-results-text").text(
+			`You got ${correct} out of ${quizLength} correct!`
+		);
+		$(".quiz-results").show();
+		currentQuestion = 0;
+	});
+
+	$(".quiz-btn-results").click(function () {
+		$(".quiz-results").hide();
+		$(".quiz-question").addClass("result");
+		$(".quiz-btn").addClass("result");
+		$(".quiz-question:first").show();
+		$(".quiz-btn-next").show();
+
+		$(".quiz-progress-bar-fill").css("width", "0%");
+		$(".quiz-progress-text").text("0%");
+
+		$(".quiz-answer").css("pointer-events", "none");
+
+		$(".quiz-btn-next").off("click");
+		$(".quiz-btn-next").click(function () {
+			$(".quiz-question").hide();
+			$(".quiz-question")
+				.eq(currentQuestion + 1)
+				.show();
+			currentQuestion++;
+			if (currentQuestion == $(".quiz-question").length - 1) {
+				$(".quiz-btn-next").hide();
+			}
+			$(".quiz-btn-prev").show();
+		});
+
+		$(".quiz-btn-prev").off("click");
+		$(".quiz-btn-prev").click(function () {
+			$(".quiz-question").hide();
+			$(".quiz-question")
+				.eq(currentQuestion - 1)
+				.show();
+			currentQuestion--;
+			if (currentQuestion == 0) {
+				$(".quiz-btn-prev").hide();
+			}
+			$(".quiz-btn-next").show();
+		});
+	});
+
+	$(".quiz-btn-retry").click(function () {
+		resetQuiz();
+		generateQuiz(questions);
+		$(".quiz-answer").click(function () {
+			if ($(this).hasClass("selected")) {
+				$(this).removeClass("selected");
+				$(".quiz-btn-next").addClass("inactive");
+			} else {
+				$(this).siblings().removeClass("selected");
+				$(this).toggleClass("selected");
+				$(".quiz-btn-next").removeClass("inactive");
+			}
+		});
+	});
+});
+
+function generateQuestion(q) {
+	const { title, answers, correct, image } = q;
+	const allAnswers = answers
+		.map((answer, index) => {
+			return `<div class="quiz-answer">${index + 1}. ${answer}</div>`;
+		})
+		.join("");
+
+	$("<div>", {
+		class: "quiz-question",
+		"data-correct": correct,
+	})
+		.append(
+			`${
+				image
+					? `<img class="quiz-image" src=${image} alt="Image for question: ${title}"/>`
+					: ""
+			}
+			<h2 class="quiz-title">${title}</h2>
+			<div class="quiz-answers">${allAnswers}</div>`
+		)
+		.appendTo(".quiz-body");
+}
+
+function generateQuiz() {
+	const questionIndex = [];
+	for (let i = 0; i < quizLength; i++) {
+		let index = Math.floor(Math.random() * questions.length);
+		while (questionIndex.includes(index)) {
+			index = Math.floor(Math.random() * questions.length);
+		}
+		questionIndex.push(index);
+		generateQuestion(questions[questionIndex[i]]);
+	}
+	$(".quiz-question:not(:first)").hide();
+}
+
+function updateProgress() {
+	$(".quiz-progress-bar-fill").css(
+		"width",
+		`${(currentQuestion / $(".quiz-question").length) * 100}%`
+	);
+	$(".quiz-progress-text").text(
+		`${currentQuestion}/${$(".quiz-question").length}`
+	);
+}
+
+function resetQuiz() {
+	currentQuestion = 0;
+	$(".quiz-question").remove();
+	$(".quiz-btn-prev").hide();
+	$(".quiz-btn-next").show();
+	$(".quiz-btn-next").addClass("inactive");
+	$(".quiz-btn-submit").hide();
+	$(".quiz-progress-bar-fill").css("width", "0%");
+	$(".quiz-progress-text").text(`0/${quizLength}`);
+}
+
+// booking
 // create appointment widget
 /* AppointmentThing widget */
 $("<section>", { class: "section", id: "booking" })
@@ -441,11 +688,13 @@ $(document).ready(function () {
 		$(link).show();
 		if (link == "#top") {
 			$(".main-navigation").css("background-image", "");
+			$(".background-image").show();
 		} else {
 			$(".main-navigation").css(
 				"background-image",
 				"url(../assets/images/lexus.jpg)"
 			);
+			$(".background-image").hide();
 		}
 	});
 
