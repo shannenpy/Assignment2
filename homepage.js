@@ -432,24 +432,40 @@ fetch("./assets/json/licenses.json")
 	.then((data) => {
 		data.map((vehicle) => {
 			let { type, heading, classes, sidenote } = vehicle;
-			type = type.toLowerCase();
+			type = type.toLowerCase().replace(/\s/g, "-");
 			$(`<div id="${type}-licenses" class="license-type">
-		<h3>${heading ? heading : type}</h3>
+		<h3 class="license-heading">${heading ? heading : type}</h3>
 		<div id="${type}-content" class="license-content">
 		<ul class="license-ul">
 		${classes
 			.map((license) => {
-				return `<li><button id="button-${license}" class="pricing-btn">${license}</button></li>`;
+				return `<li><button id="btn-${license}" class="pricing-btn">${license}</button></li>`;
 			})
 			.join("")}
-		</ul>
+			</ul>
+			${sidenote ? `<p class="side-note">Side note: ${sidenote}</p>` : ""}
+			<button class="purchase pricing-btn">Purchase</btn>
 		</div>
-		${sidenote ? `<p class="side-note">Side note: ${sidenote}</p>` : ""}
 		</div>`).appendTo(".license-list");
 		});
-		$(".pricing-btn").click(function () {
-			$(".pricing-btn").removeClass("active");
-			$(this).addClass("active");
+		$(".license-heading:first").addClass("active");
+		$(".license-heading").not(".active").siblings(".license-content").hide();
+
+		$(".pricing-btn:not('.purchase')").click(function () {
+			$(this).parent().siblings().children().removeClass("active");
+			$(this).toggleClass("active");
+		});
+
+		$(".license-heading").click(function () {
+			if ($(this).hasClass("active")) {
+				$(this).removeClass("active");
+				$(".license-content").slideUp();
+			} else {
+				$(".license-heading").removeClass("active");
+				$(this).addClass("active");
+				$(".license-content").slideUp();
+				$(this).siblings(".license-content").slideDown();
+			}
 		});
 	});
 
@@ -686,7 +702,7 @@ $(document).ready(function () {
 		toggleLinks();
 		$(".section").hide();
 		$(link).show();
-		if (link == "#top") {
+		if (link == "#top" || link == "#login") {
 			$(".main-navigation").css("background-image", "");
 			$(".background-image").show();
 		} else {

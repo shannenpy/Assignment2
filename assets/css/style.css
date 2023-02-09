@@ -68,6 +68,10 @@ body {
 	position: relative;
 }
 
+#name.active {
+	cursor: default;
+}
+
 #name:after {
 	content: "";
 	width: 90%;
@@ -469,13 +473,55 @@ ul {
 /* pricing */
 .section#pricing {
 	flex-direction: row;
+	width: 100%;
 	height: 100%;
 }
 
+.license-list {
+	width: 90%;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.license-type {
+	position: relative;
+}
+
+.license-heading {
+	cursor: pointer;
+	margin-bottom: 0;
+}
+
+.license-heading:hover {
+	text-decoration: underline;
+	position: relative;
+}
+
+/* https://codepen.io/Sarah_C/pen/jWoEWb */
+.license-heading:after {
+	content: "";
+	position: absolute;
+	margin-left: 1em;
+	height: 0;
+	width: 0;
+	border-radius: 3px;
+	border: 8px solid;
+	border-color: var(--primary-color) var(--primary-color) transparent
+		transparent;
+	transform: rotate(225deg);
+	transition: cubic-bezier(0.075, 0.82, 0.165, 1) 1s;
+}
+
+.license-heading.active:after {
+	transform: rotate(135deg) translateY(50%);
+}
+
 .license-ul {
+	padding: 0;
+	margin: 1em 0;
 	display: flex;
 	flex-direction: row;
-	padding: 0;
 }
 
 .pricing-btn {
@@ -686,7 +732,11 @@ ul {
 		display: block;
 	}
 
-	/* .login-form {
-		background-color: unset;
-	} */
+	.section#login {
+		background-color: transparent;
+	}
+
+	.login-form {
+		background-color: transparent;
+	}
 }
