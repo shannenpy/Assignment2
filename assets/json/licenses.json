@@ -19,7 +19,7 @@
 		"sidenote": "Class 1 license is only issued to people with disabilities."
 	},
 	{
-		"type": "Motorcycle",
+		"type": "Motorcycles",
 		"heading": "For all motorcycles",
 		"classes": [
 			{
@@ -65,7 +65,7 @@
 		"sidenote": "You must have 2B license for a year before taking 2A test. You must also have 2A license for a year before taking Class 2 test."
 	},
 	{
-		"type": "Car",
+		"type": "Cars",
 		"heading": "Up to 7 people & Unladen weight < 2,500 kg",
 		"classes": [
 			{
