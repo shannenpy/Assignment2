@@ -17,7 +17,6 @@
 
 a {
 	color: inherit;
-	text-decoration: none;
 }
 
 a:visited {
@@ -40,6 +39,13 @@ body {
 		"nav"
 		"homepage";
 	grid-template-rows: var(--navbar-height) 1fr;
+}
+
+.no-scroll {
+	height: 100%;
+	max-height: 100%;
+	overflow: hidden;
+	margin: 0;
 }
 
 /* ----- nav menu -----  */
@@ -272,13 +278,6 @@ ul {
 	justify-content: center;
 }
 
-.homepage.no-scroll {
-	height: 100%;
-	max-height: 100%;
-	overflow: hidden;
-	margin: 0;
-}
-
 .section {
 	min-width: 300px;
 	width: 100%;
@@ -291,6 +290,19 @@ ul {
 
 .section:not(#top, #login) {
 	background-color: var(--secondary-color);
+}
+
+/* top */
+.section#top {
+	color: var(--primary-font-color);
+	font-weight: bold;
+	width: 90%;
+	margin: auto;
+}
+
+p.slogan {
+	font-size: 5em;
+	max-width: min-content;
 }
 
 /* quiz */
@@ -307,12 +319,13 @@ ul {
 .quiz-header {
 	flex-basis: 80px;
 	display: grid;
-	grid-template-columns: 1fr 1fr 3fr;
+	grid-template-columns: 1fr 1fr 80%;
 	justify-content: start;
 	align-items: center;
 }
 
-.quiz-header h1 {
+.quiz-header .quiz-name {
+	width: fit-content;
 	margin: 0;
 }
 
@@ -320,6 +333,7 @@ ul {
 	justify-self: flex-end;
 	width: 50%;
 	text-align: right;
+	transform: translateY(20%);
 }
 
 .quiz-progress * {
@@ -471,7 +485,8 @@ ul {
 	color: var(--primary-font-color);
 }
 
-.quiz-btn-retry {
+.quiz-btn-retry,
+.quiz-btn-results {
 	position: relative;
 	top: 0;
 	transform: translate(0);
@@ -526,6 +541,10 @@ ul {
 	transform: rotate(135deg) translateY(50%);
 }
 
+.license-heading span {
+	font-size: 0.75em;
+}
+
 .license-ul {
 	padding: 0;
 	margin: 1em 0;
@@ -549,6 +568,10 @@ ul {
 .pricing-btn:hover {
 	background-color: var(--primary-color);
 	color: var(--primary-font-color);
+}
+
+.license-details * {
+	margin-top: 0;
 }
 
 .side-note {
@@ -648,6 +671,7 @@ ul {
 
 .contact-details ul .contact-list-content p:first-child,
 .contact-details ul .contact-list-content p:first-child a {
+	font-weight: bold;
 	width: 100%;
 	display: flex;
 }
@@ -658,6 +682,17 @@ i {
 }
 
 /* location */
+.section#location {
+	background-color: var(--secondary-color);
+	color: var(--primary-color);
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
 .section#location p {
 	text-align: center;
 }
@@ -812,6 +847,12 @@ i {
 
 /* ----- mobile view -----  */
 @media (max-width: 800px) {
+	p.slogan {
+		font-size: 3em;
+		margin: 0;
+		transform: translateY(-50%);
+	}
+
 	.section#contact-us {
 		color: var(--primary-color);
 		grid-template-areas: "details" "form";

@@ -1,80 +1,145 @@
 [
-    {
-        "type": "Invalid carriages",
-        "heading": "Invalid carriages",
-        "classes": [
-            {"className": "1",
-            "licenseDesc": {"1": "Class 1 vehicles are specially designed for persons suffering from a defect or disability."},
-            "courseDesc": {"1": "S$3,999", "2": "15 theory classes", "3": "15 practical sessions", "4": "*1 each* BTT/ FTT/ TP tests"}
-            }
-        ],
-        "sidenote": "Class 1 license is only issued to people with disabilities.",
-        "details": [
-            {"className": "1",
-            "licenseDesc": {"1": "Big bikes", 
-            "2": "Cylinder capacity of more than 400cm<sup>3</sup>"},
-            "courseDesc": {"1": "S$2,227", "2": "5 theory classes", "3": "15 practical sessions", "4": "*1 each* BTT/ FTT/ TP tests"}
-            }
-        ]
-    },
-    {
-        "type": "Motorcycle",
-        "heading": "For all motorcycles",
-        "classes": [
-            {"className": "2",
-            "licenseDesc": {"1": "Big bikes", 
-            "2": "Cylinder capacity of more than 400cm<sup>3</sup>"},
-            "courseDesc": {"1": "S$2,227", "2": "5 theory classes", "3": "15 practical sessions", "4": "*1 each* BTT/ FTT/ TP tests"}
-            }, 
-            {"className": "2A",
-            "licenseDesc": {"1": "Medium bikes", 
-            "2": "Cylinder capacity of less than 400cm<sup>3</sup>"},
-            "courseDesc": {"1": "S$2,427", "2": "5 theory classes", "3": "20 practical sessions", "4": "*1 each* BTT/ FTT/ TP tests"}
-            }, 
-            {"className": "2B",
-            "licenseDesc": {"1": "Small Bikes", 
-            "2": "Cylinder capacity of less than 200cm<sup>3</sup>"},
-            "courseDesc": {"1": "S$2,727", "2": "10 theory classes", "3": "20 practical sessions", "4": "*1 each* BTT/ FTT/ TP tests"}
-            }
-        ],
-        "sidenote": "You must have 2B license for a year before taking 2A test. You must also have 2A license for a year before taking Class 2 test."
-    },
-    {
-        "type": "Car",
-        "heading": "Vehicles that can carry up to 7 people. Vehicles with unladen weight not exceeding 2,500 kg",
-        "classes": [
-            {"className": "3",
-            "licenseDesc": {"1": "For both manual and auto transmission vehicles"},
-            "courseDesc": {"1": "S$3,527", "2": "10 theory classes", "3": "20 practical sessions", "4": "*1 each* BTT/ FTT/ TP tests"}
-            }, 
-            {"className": "3A",
-            "licenseDesc": {"1": "Can only be used to drive auto transmission vehicles"},
-            "courseDesc": {"1": "S$3,127", "2": "10 theory classes", "3": "15 practical sessions", "4": "*1 each* BTT/ FTT/ TP tests"}
-            }, 
-            {"className": "3C",
-            "licenseDesc": {"1": "For foreign workers with a work permit or S-Pass", 
-            "2": "Only allows you to drive a car, and not other light-weight vehicles like vans",
-        "3": "Only theory test needs to be taken if you already have a driving license from your own country"},
-            "courseDesc": {"1": "S$3,527", "2": "10 theory classes", "3": "20 practical sessions", "4": "*1 each* BTT/ FTT/ TP tests"}
-            },
-            {"className": "3CA",
-            "licenseDesc": {"1": "For foreign workers with a work permit or S-Pass", 
-            "2": "Only theory test needs to be taken if you already have a <strong>auto-transmission</strong> driving license from your own country"},
-            "courseDesc": {"1": "S$3,127", "2": "10 theory classes", "3": "15 practical sessions", "4": "*1 each* BTT/ FTT/ TP tests"}
-            }
-        ],
-        "sidenote": ""
-    },
-    {
-        "type": "Others",
-        "heading": "Buses, Trucks etc.",
-        "classes": [
-            {"className": "4",
-            "licenseDesc": {"1": "For vehicles that weigh more than 2,500kg, but less than 7,250kg",
-        "2": "Includes buses, trucks, and most big vehicles"},
-            "courseDesc": {"1": "S$4,599", "2": "15 theory classes", "3": "20 practical sessions", "4": "*1 each* BTT/ FTT/ TP tests"}
-            }
-        ],
-        "sidenote": "Class 4A licenses are only for poeple who drive public buses."
-    }
+	{
+		"type": "Invalid carriages",
+		"heading": "For the disabled",
+		"classes": [
+			{
+				"className": "1",
+				"licenseDesc": {
+					"1": "Class 1 vehicles are specially designed for persons suffering from a defect or disability."
+				},
+				"courseDesc": {
+					"price": "S$3,999",
+					"theory": "15 theory classes",
+					"pratical": "15 practical sessions",
+					"tests": "*1 each* BTT/ FTT/ TP tests"
+				}
+			}
+		],
+		"sidenote": "Class 1 license is only issued to people with disabilities."
+	},
+	{
+		"type": "Motorcycle",
+		"heading": "For all motorcycles",
+		"classes": [
+			{
+				"className": "2",
+				"licenseDesc": {
+					"1": "Big bikes",
+					"2": "Cylinder capacity of more than 400cm<sup>3</sup>"
+				},
+				"courseDesc": {
+					"price": "S$2,227",
+					"theory": "5 theory classes",
+					"practical": "15 practical sessions",
+					"tests": "*1 each* BTT/ FTT/ TP tests"
+				}
+			},
+			{
+				"className": "2A",
+				"licenseDesc": {
+					"1": "Medium bikes",
+					"2": "Cylinder capacity of less than 400cm<sup>3</sup>"
+				},
+				"courseDesc": {
+					"price": "S$2,427",
+					"theory": "5 theory classes",
+					"practical": "20 practical sessions",
+					"tests": "*1 each* BTT/ FTT/ TP tests"
+				}
+			},
+			{
+				"className": "2B",
+				"licenseDesc": {
+					"1": "Small Bikes",
+					"2": "Cylinder capacity of less than 200cm<sup>3</sup>"
+				},
+				"courseDesc": {
+					"price": "S$2,727",
+					"theory": "10 theory classes",
+					"practical": "20 practical sessions",
+					"tests": "*1 each* BTT/ FTT/ TP tests"
+				}
+			}
+		],
+		"sidenote": "You must have 2B license for a year before taking 2A test. You must also have 2A license for a year before taking Class 2 test."
+	},
+	{
+		"type": "Car",
+		"heading": "Up to 7 people & Unladen weight < 2,500 kg",
+		"classes": [
+			{
+				"className": "3",
+				"licenseDesc": {
+					"1": "For both manual and auto transmission vehicles"
+				},
+				"courseDesc": {
+					"price": "S$3,527",
+					"theory": "10 theory classes",
+					"practical": "20 practical sessions",
+					"tests": "*1 each* BTT/ FTT/ TP tests"
+				}
+			},
+			{
+				"className": "3A",
+				"licenseDesc": {
+					"1": "Can only be used to drive auto transmission vehicles"
+				},
+				"courseDesc": {
+					"price": "S$3,127",
+					"theory": "10 theory classes",
+					"practical": "15 practical sessions",
+					"tests": "*1 each* BTT/ FTT/ TP tests"
+				}
+			},
+			{
+				"className": "3C",
+				"licenseDesc": {
+					"1": "For foreign workers with a work permit or S-Pass",
+					"2": "Only allows you to drive a car, and not other light-weight vehicles like vans",
+					"3": "Only theory test needs to be taken if you already have a driving license from your own country"
+				},
+				"courseDesc": {
+					"price": "S$3,527",
+					"theory": "10 theory classes",
+					"practical": "20 practical sessions",
+					"tests": "*1 each* BTT/ FTT/ TP tests"
+				}
+			},
+			{
+				"className": "3CA",
+				"licenseDesc": {
+					"1": "For foreign workers with a work permit or S-Pass",
+					"2": "Only theory test needs to be taken if you already have a <strong>auto-transmission</strong> driving license from your own country"
+				},
+				"courseDesc": {
+					"price": "S$3,127",
+					"theory": "10 theory classes",
+					"practical": "15 practical sessions",
+					"tests": "*1 each* BTT/ FTT/ TP tests"
+				}
+			}
+		],
+		"sidenote": ""
+	},
+	{
+		"type": "Others",
+		"heading": "Buses, Trucks etc.",
+		"classes": [
+			{
+				"className": "4",
+				"licenseDesc": {
+					"1": "For vehicles that weigh more than 2,500kg, but less than 7,250kg",
+					"2": "Includes buses, trucks, and most big vehicles"
+				},
+				"courseDesc": {
+					"price": "S$4,599",
+					"theory": "15 theory classes",
+					"practical": "20 practical sessions",
+					"tests": "*1 each* BTT/ FTT/ TP tests"
+				}
+			}
+		],
+		"sidenote": "Class 4A licenses are only for poeple who drive public buses."
+	}
 ]

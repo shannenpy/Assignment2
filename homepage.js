@@ -1,12 +1,17 @@
 if (window.location.pathname != "/index.html") {
 	window.location.pathname = "/index.html";
 }
+// image taken from
+// https://www.hdcarwallpapers.com/2018_lexus_lc_500h_structural_blue_4k-wallpapers
+let $backgroundImage = $(
+	`<image src="../assets/images/lexus.jpg" class="background-image" alt="Picture of a blue Lexus"></image>`
+);
 
 const restdbApiKey = "63dfab573bc6b255ed0c46ae";
 let emailRegexp = /\S+@\S+\.\S+/;
 const $loadingLottie = `<lottie-player src="https://assets1.lottiefiles.com/packages/lf20_p8bfn5to.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>`;
 const $loadingPage = `<div class="loading-page">${$loadingLottie}</div>`;
-let $errorMessage = $("<p>", { class: "error-message" });
+let $errorMessage = `<p class="error-message"></p>`;
 
 // check if user is logged in
 let isLoggedIn = sessionStorage.getItem("user") ? true : false;
@@ -16,19 +21,14 @@ function login() {
 		sessionStorage.getItem("user")
 	);
 	document.title += ` | ${firstName} ${lastName}`;
+	$("#top").hide();
 	registeredUser(userID, firstName, lastName, credits);
 
 	$("input[name='name']").val(`${firstName} ${lastName}`);
 	$("input[name='email']").val(email);
 	$("input[name='phone']").val(phone);
 }
-
-if (isLoggedIn) {
-	login();
-}
-
-toggleLinks();
-
+//
 // set site name
 const title = `Driving for Dummies`;
 document.title = `${title}`;
@@ -88,8 +88,6 @@ $("<a>", {
 })
 	.append(title)
 	.appendTo(".company");
-	.append(title)
-	.appendTo(".company");
 
 $("#name").click(function () {
 	if (isLoggedIn) {
@@ -107,13 +105,8 @@ $("#name").click(function () {
 $("<ul>", { class: "nav-ul" })
 	.append(generateLinks())
 	.appendTo(".main-navigation");
-	.append(generateLinks())
-	.appendTo(".main-navigation");
 
 function generateLinks() {
-	return pages.map((page) => {
-		return `<a href = ${page.url} class = "nav-a" mBLI = ${page.mustBeLoggedIn} both = ${page.both}><li class = "nav-li">${page.name}</li></a>`;
-	});
 	return pages.map((page) => {
 		return `<a href = ${page.url} class = "nav-a" mBLI = ${page.mustBeLoggedIn} both = ${page.both}><li class = "nav-li">${page.name}</li></a>`;
 	});
@@ -162,13 +155,9 @@ const hamburger = `<input type="checkbox" id="menu_checkbox">
 $("<label>", { class: "hamburger" })
 	.append(hamburger)
 	.appendTo(".main-navigation");
-	.append(hamburger)
-	.appendTo(".main-navigation");
 
 $("<div>", { class: "homepage", id: "homepage" }).appendTo("body");
-let $backgroundImage = $(
-`<image src="../assets/images/lexus.jpg" class="background-image"></image>`
-);
+
 $(".homepage").append($backgroundImage);
 // create hamburger menu overlay
 $("<div>", { class: "hamburger-overlay" }).appendTo("body");
@@ -444,13 +433,10 @@ $(`<div
 		</div>`).appendTo("#booking");
 
 // #top
-$("<section>", { class: "section", id: "top" }).appendTo(".homepage");
+$("<section>", { class: "section no-scroll", id: "top" }).appendTo(".homepage");
 
-// image taken from
-// https://www.hdcarwallpapers.com/2018_lexus_lc_500h_structural_blue_4k-wallpapers
-let $backgroundImage = $(
-	`<image src="../assets/images/lexus.jpg" class="background-image" alt="Picture of a blue Lexus"></image>`
-);
+$("<p>", { class: "slogan" }).append("Driving you to success").appendTo("#top");
+
 $("body").append($backgroundImage);
 
 // #pricing
@@ -468,28 +454,73 @@ fetch("./assets/json/licenses.json")
 	.then((data) => {
 		data.map((vehicle) => {
 			let { type, heading, classes, sidenote } = vehicle;
-			type = type.toLowerCase().replace(/\s/g, "-");
-			$(`<div id="${type}-licenses" class="license-type">
-		<h3 class="license-heading">${heading ? heading : type}</h3>
-		<div id="${type}-content" class="license-content">
+			type = type.replace(/\s/g, "-");
+			$(`<div id="${type.toLowerCase()}-licenses" class="license-type" data="${type.toLowerCase()}">
+		<h3 class="license-heading">${type} <span>(${heading})</span></h3>
+		<div id="${type.toLowerCase()}-content" class="license-content">
 		<ul class="license-ul">
-		${classes
-			.map((license) => {
-				return `<li><button id="btn-${license}" class="pricing-btn">${license}</button></li>`;
-			})
-			.join("")}
-			</ul>
-			${sidenote ? `<p class="side-note">Side note: ${sidenote}</p>` : ""}
-			<button class="purchase pricing-btn">Purchase</btn>
+			${classes
+				.map((c) => {
+					return `<li><button id="btn-${c.className}" class="license-class pricing-btn">${c.className}</button></li>`;
+				})
+				.join("")}
+		</ul>
+		<div class="license-details-container" data-type="${type.toLowerCase()}"></div>
+		${sidenote ? `<p class="side-note">Side note: ${sidenote}</p>` : ""}
+		<button class="purchase pricing-btn">Purchase</btn>
 		</div>
 		</div>`).appendTo(".license-list");
+			generateLicenseDetails(type, classes);
 		});
-		$(".license-heading:first").addClass("active");
-		$(".license-heading").not(".active").siblings(".license-content").hide();
 
-		$(".pricing-btn:not('.purchase')").click(function () {
+		function generateLicenseDetails(type, classes) {
+			classes.map((c) => {
+				const { className, licenseDesc, courseDesc } = c;
+				const { price, theory, practical, tests } = courseDesc;
+				$(`<div class="license-details" data-type="${type.toLowerCase()}" data-class="${className}">
+				${price ? `<p class="license-details-price">${price}</p>` : ""}
+				${theory ? `<p class="license-details-theory">${theory}</p>` : ""}
+				${practical ? `<p class="license-details-practical">${practical}</p>` : ""}
+				${tests ? `<p class="license-details-tests">${tests}</p>` : ""}
+				</div>`).appendTo(
+					`.license-details-container[data-type="${type.toLowerCase()}"]`
+				);
+			});
+			$(".license-details").hide();
+		}
+
+		// show first license
+		$(".license-heading:first").addClass("active");
+		$(".license-heading.active")
+			.siblings(".license-content")
+			.children(".license-ul")
+			.children("li:first")
+			.children(".license-class")
+			.addClass("active");
+		$(".license-heading.active")
+			.siblings(".license-content")
+			.children(".license-details-container")
+			.children(".license-details:first")
+			.show();
+		$(".license-heading").not(".active").siblings(".license-content").hide();
+		$(".license-class").click(function () {
 			$(this).parent().siblings().children().removeClass("active");
 			$(this).toggleClass("active");
+			if ($(this).hasClass("active")) {
+				const type = $(this)
+					.parent()
+					.parent()
+					.siblings(".license-details-container")
+					.data("type");
+				const classNameText = $(this).text();
+				$(`.license-details[data-type="${type.toLowerCase()}"]`).slideUp();
+				$(`.license-details[data-type="${type.toLowerCase()}"]`)
+					.filter(`[data-class="${classNameText}"]`)
+					.delay(400)
+					.slideDown();
+			} else {
+				$(".license-details").slideUp();
+			}
 		});
 
 		$(".license-heading").click(function () {
@@ -667,13 +698,6 @@ function loadMap() {
 		.append("Map may take a while to load... Please be patient!")
 		.appendTo("#location");
 	$("<div>", { id: "mapContainer" }).appendTo("#location");
-	$("<section>", { class: "section", id: "location" })
-		.toggle()
-		.appendTo(".homepage");
-	$("<p>")
-		.append("Map may take a while to load... Please be patient!")
-		.appendTo("#location");
-	$("<div>", { id: "mapContainer" }).appendTo("#location");
 
 	const coordinates = { lng: 103.7777, lat: 1.3324 };
 	const address = "535 Clementi Rd, Singapore 599489";
@@ -707,7 +731,7 @@ function loadMap() {
 }
 
 // Load the map
-// loadMap();
+loadMap();
 
 // #login
 $("<section>", { class: "section", id: "login" })
@@ -739,16 +763,6 @@ $(".cancel").click(function (e) {
 	e.preventDefault();
 	history.back() || (location.href = "./index.html");
 });
-
-function changeWindowBackground() {
-	if ($(window).width() < 500) {
-		$backgroundImage.hide();
-	} else {
-		$backgroundImage.show();
-	}
-}
-
-$(window).ready(changeWindowBackground());
 
 let query = {};
 function userApi(e) {
@@ -835,22 +849,13 @@ function registeredUser(userID, firstName, lastName, credits) {
 			`lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
 		)
 		.appendTo("#registered-user");
-	$("<p>")
-		.append(
-			`lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
-		)
-		.appendTo("#registered-user");
-	$("<p>")
-		.append(
-			`lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
-		)
-		.appendTo("#registered-user");
 }
 
 //logout
 function logout() {
 	sessionStorage.removeItem("user");
 	isLoggedIn = false;
+	$(".homepage").remove("#registered-user");
 	toggleLinks();
 	$("#registered-user").hide();
 	$("input[name='name']").val("");
@@ -859,29 +864,6 @@ function logout() {
 	$("#top").show();
 }
 
-// top of homepage
-let tophp = document.createElement("section");
-tophp.classList.add("top");
-homepage.append(tophp);
-let hpbg = document.createElement("img");
-hpbg.setAttribute("src", "./13643.webp");
-hpbg.setAttribute("alt", "Picture of Driving for Dummies");
-hpbg.setAttribute("class", "top-homepage--image");
-tophp.append(hpbg);
-let topContentDiv = document.createElement("div");
-topContentDiv.classList.add("top-content-div");
-homepage.append(topContentDiv);
-var tophpContent = `<a href = "pricing.html" class="top-homepage" id="find-out">Find out more here</a>
-<h1>Driving for Dummies</h1>
-<p>Here at Driving for Dummies, we want what's best for you. 
-We have over (number) course to choose from a license in class() to class(). 
-How are we different from other driving schools? 
-We want you to get the most of your money, so we have free videos and quizzes for you on top of the course you have paid for.
-Additionally, we want to give you the opportunity to take charge of your learning. 
-Hence, you have the option to choose your prefered instructors.</p>`;
-topContentDiv.innerHTML = tophpContent;
-
-// todo name resize not working
 // listen for window resize
 function changeTitle() {
 	if ($(window).width() > 500) {
@@ -904,6 +886,10 @@ function toggleHamburgerMenu() {
 }
 
 $(document).ready(function () {
+	if (isLoggedIn) {
+		login();
+	}
+	toggleLinks();
 	changeTitle();
 
 	$("#menu_checkbox").click(function () {
