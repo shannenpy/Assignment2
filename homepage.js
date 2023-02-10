@@ -754,6 +754,7 @@ let form = $(`
 		<button class="cancel" tabindex="0">Cancel</button>
 		<button class="sign-in" tabindex="0">Sign In</button>
 	</div>
+	<button class="register-btn" tabindex="0">Dont have an account yet? Register now!</button>
 </form>`);
 
 $("#login").append(form, $loadingPage);
@@ -763,6 +764,41 @@ $(".cancel").click(function (e) {
 	e.preventDefault();
 	history.back() || (location.href = "./index.html");
 });
+
+// register new user form
+$(".register-btn").click(rForm())
+function rForm() {
+	$("<section", {class: "section", id: "register"}).appendTo(".homepage")
+
+	let form = $(`
+	<form class="register-form">
+		<h1>Register</h1>
+		<div class="input-container>
+			<div class="input-field">
+				<input class="input-name" type="name" name="fname" placeholder="First Name">
+			</div>
+			<div class="input-field">
+				<input class="input-name" type="name" name="lname" placeholder="Last Name">
+			</div>
+			<div class="input-field">
+				<input class="input-email" type="email" name="email" placeholder="Your Email">
+			</div>
+			<div class="input-field">
+				<input class="input-password" type="password" name="password" placeholder="Your Password">
+			</div>
+			<div class="input-field">
+				<input class="input-num" type="tel" name="phone" placeholder="Your Phone No.">
+			</div>
+		</div>
+		<div class="form-btns">
+			<button class="cancel" tabindex="0">Cancel</button>
+			<button class="sign-in" tabindex="0">Register</button>
+		</div>
+	</form>
+		`)
+	$("#register").append(form, $loadingPage);
+	$("#register .loading-page").toggle();
+}
 
 let query = {};
 function userApi(e) {

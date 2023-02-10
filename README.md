@@ -13,36 +13,113 @@ This project is to build a website to provide driving lessons and practice for a
 
 ### Wireframes
 
-(to add pdf of sketch and .xd wireframe)
+- [Wireframe](./design-process/wireframe.xd)
 
 ## Features
 
-### :sparkles:Existing features:sparkles:
+### Existing features:sparkles:
 
-1.  **Homepage**
+##### _[General: for both logged in and not]_
 
-2.  **Pricing page**
+1.  **Homepage**:house:
 
-    - Allows users to browse all license classes under a catergory, by having them click anywhere on the catergory name to reveal a dropdown list of the different classes.
+    - Allow users to.....
       <br>
-    - Allows users to view the respective prices and its details of license class chosen, by having them click onto the license they are interested in. Details include a short description of the selected license, the number lessons(theory and practical) one is entitled to and how many tests they get.
+
+2.  **Pricing page**:moneybag:
+
+    - Allow users to browse all license classes under a catergory, by having them click anywhere on the catergory name to reveal a dropdown list of the different classes.
+      <br>
+    - Allow users to view the respective prices and its details of license class chosen, by having them click onto the license they are interested in. Details include a short description of the selected license, the number lessons(theory and practical) one is entitled to and how many tests they get.
       <br>
     - (purchase function tbc)
+      <br>
 
-3.  **Contact page** which allows users to enquire any queries they have. Telephone number, social media accounts and email address will be shown.
+3.  **Contact Us page**:phone:
+
+    - Allow users to enquire any queries they have by filling in a contact form.
+      <br>
+    - Allow users to know more about the school by listing the opening hours, location, phone number and social media of school. Location and social media links to the offial app page.
+      <br>
+
+4.  **Location page**:round_pushpin:
+
+    - Allow users to view clearly where exactly the physical school is by displaying a map.
+      <br>
+
+5.  **Login page**:unlock:
+    - Allow users to log into their accounts to access their courses by getting them to fill in a login form.
+      <br>
+
+##### _[For users with an account(logged in)]_
+
+1. **Academy page**:pencil:
+
+   - Allow users to practice for their theory test by having a quiz system.
+     <br>
+
+2. **Booking page**:calendar:
+
+   - Allow users to check for available lesson timeslots, as well as view their upcoming and past lessons by having a booking system.
+     <br>
+   - Allows users to take charge of their learning by letting them choose their prefered teacher.
+     <br>
+
+3. **Contact Us page**:phone:
+
+   - Allow users to save time by having their personal information auto-filled, instead of manually filling it in when not logged in.
+     <br>
+
+4. **Logout**:lock:
+   - Allow users to secure their account when not in use by having them click the "LOGOUT" button to exit their accounts.
 
 ### Features to be implemented:clock11:
 
-- **Navigation bar** which allows users to easily access the diffent pages which include homepage, location, pricing, contact and login/ signup.
+1.  **Homepage**:house:
 
-- **Homepage** which allows users to see the passing rate of the school, the most popular license, where the school is located, and how to contact the school.
+    - Allow users to.....
+      <br>
 
-- **Login/ Signup page** which allows new users to create accounts and existing users to log back into their accounts.
+2.  **Pricing page**:moneybag:
 
-**For registered users only**
+    - Allow users to read about the license description so they have even better knowledge by displaying the description along with the course description.
+      <br>
+    - Allow users to.....
+      <br>
 
-- **Navigation bar** which allows users to easily access the diffent pages which include homepage, booking, academy, pricing, location and contact.
+3.  **Contact Us page**:phone:
 
-- **Academy** where users can get acess to virtual or video lessons and take practice quizzes.
+    - Allow users to.....
+      <br>
+    - Allow users to.....
+      <br>
 
-- **Booking** which allows users to check for available timeslots, as well as choose their prefered teacher, for their practical lessons. Users can also view upcoming and past lessons.
+4.  **Location page**:round_pushpin:
+
+    - Allow users to.....
+      <br>
+
+5.  **Login page**:unlock:
+    - Allow users to create new accounts by having them fill in a register form.
+      <br>
+
+## Technologies Used
+
+- [JavaScript](https://www.javascript.com/)
+- [JQuery](https://jquery.com/)
+- [RestDB](https://restdb.io/)
+- [Appointment Thing](https://appointmentthing.com/#gref)
+- [HTML](https://html.com/)
+- [CSS](https://css.com/)
+
+## Credits
+
+### Content
+
+- The license classes were taken from [Goody Feed](https://goodyfeed.com/types-of-driving-licenses-singapore/)
+- The icons used were from [Font Awesome](https://fontawesome.com/)
+- The quiz questions were taken from [GitHub user](https://github.com/dukemiller/driving-test/blob/master/questions.json)
+
+### Media
+
+- Picture of car is taken from [HD Car Wallpapers](https://www.hdcarwallpapers.com/2018_lexus_lc_500h_structural_blue_4k-wallpapers)

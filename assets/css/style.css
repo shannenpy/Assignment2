@@ -811,9 +811,22 @@ i {
 	border-color: var(--danger-color);
 }
 
+.register-btn {
+	margin-top: 12px;
+	background-color: #021048;
+	color: #fff;
+	border-color: #c5cbd3;
+	border-radius: 5px;
+}
+
 .form-btns *:hover,
 .form-btns *:focus {
 	font-weight: bold;
+	border: solid white 2px;
+}
+
+.register-btn:hover, .register-btn:focus {
+	font-style: italic;
 	border: solid white 2px;
 }
 
