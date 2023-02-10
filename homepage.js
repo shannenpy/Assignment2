@@ -658,7 +658,27 @@ function logout() {
 	$("#top").show();
 }
 
-$("#logout").click(logout());
+// top of homepage
+let tophp = document.createElement("section");
+tophp.classList.add("top");
+homepage.append(tophp);
+let hpbg = document.createElement("img");
+hpbg.setAttribute("src", "./13643.webp");
+hpbg.setAttribute("alt", "Picture of Driving for Dummies");
+hpbg.setAttribute("class", "top-homepage--image");
+tophp.append(hpbg);
+let topContentDiv = document.createElement("div");
+topContentDiv.classList.add("top-content-div");
+homepage.append(topContentDiv);
+var tophpContent = `<a href = "pricing.html" class="top-homepage" id="find-out">Find out more here</a>
+<h1>Driving for Dummies</h1>
+<p>Here at Driving for Dummies, we want what's best for you. 
+We have over (number) course to choose from a license in class() to class(). 
+How are we different from other driving schools? 
+We want you to get the most of your money, so we have free videos and quizzes for you on top of the course you have paid for.
+Additionally, we want to give you the opportunity to take charge of your learning. 
+Hence, you have the option to choose your prefered instructors.</p>`;
+topContentDiv.innerHTML = tophpContent;
 
 // listen for window resize
 function changeTitle() {
