@@ -48,7 +48,7 @@ let pages = [
 		both: false,
 	},
 	{
-		name: "Pricing",
+		name: "Courses",
 		url: "#pricing",
 		mustBeLoggedIn: false,
 		both: true,
@@ -415,9 +415,8 @@ function resetQuiz() {
 // booking
 // create appointment widget
 /* AppointmentThing widget */
-$("<section>", { class: "section", id: "booking" })
-	.toggle()
-	.appendTo(".homepage");
+$("<section>", { class: "section", id: "booking" }).toggle();
+// .appendTo(".homepage");
 
 const apptThing = `<div class="apptthingemb" data-appt-url="iddrivingcentre" data-appt-types="Fd19750" data-page-text="000000" data-page-link="0f5cff" data-page-details="false" data-emb-num="1" style="width:100%;"><a href="https://appointmentthing.com" title="Appointment Scheduling">Appointment Scheduling</a></div>`;
 $(`<div
@@ -446,8 +445,18 @@ $("<section>", { class: "section", id: "pricing" })
 
 /* ----- license list ----- */
 $("<section>", { class: "license-list" })
-	.append(`<h2 class="pricing-h2">Licenses we offer</h2>`)
+	.append(`<h2 class="pricing-heading">Licenses we offer</h2>`)
 	.appendTo("#pricing");
+$("<div>", { class: "purchase-page" }).toggle().appendTo("#pricing");
+$(".purchase-page").append($loadingPage);
+$(".purchase-page .loading-page").toggle();
+$("<div>", { class: "purchase-confirmation" }).toggle().appendTo("#pricing");
+$(".purchase-confirmation").append(
+	`<div class="purchase-confirmation-content">
+					<h2 class="purchase-confirmation-heading">Purchase Confirmed</h2>
+					<p class="purchase-confirmation-subheading">Thank you for your purchase.</p>
+					<button class="back-btn">Back to homepage</button>`
+);
 
 fetch("./assets/json/licenses.json")
 	.then((response) => response.json())
@@ -456,7 +465,7 @@ fetch("./assets/json/licenses.json")
 			let { type, heading, classes, sidenote } = vehicle;
 			type = type.replace(/\s/g, "-");
 			$(`<div id="${type.toLowerCase()}-licenses" class="license-type" data="${type.toLowerCase()}">
-		<h3 class="license-heading">${type} <span>(${heading})</span></h3>
+		<h3 class="license-heading">${type} </h3>
 		<div id="${type.toLowerCase()}-content" class="license-content">
 		<ul class="license-ul">
 			${classes
@@ -534,7 +543,118 @@ fetch("./assets/json/licenses.json")
 				$(this).siblings(".license-content").slideDown();
 			}
 		});
+
+		$(".purchase").click(function () {
+			let className = $(this)
+				.siblings(".license-ul")
+				.find("li button.active")
+				.text();
+			let price = $(this)
+				.siblings(".license-details-container")
+				.find(
+					`.license-details[data-class='${className}'] .license-details-price`
+				)
+				.text();
+
+			if (className) {
+				// hide license list
+				$(".license-list").toggle();
+				// show purchase page
+				$(".purchase-page").toggle();
+				$(".purchase-page").append(
+					`<div class="purchase-page-content">
+					<h2 class="purchase-page-heading">Checkout</h2>
+					<p class="purchase-page-subheading">Please fill out the form below to purchase your license.</p>
+					<form name="purchase-form" id="purchase-form" action="#">
+
+					<div class="input-row">
+						<label for="purchase-firstName">First name</label>
+						<input type="text" name="purchase-first-name" id="purchase-first-name" placeholder="Enter your first name" required>
+					</div>
+					<div class="input-row">
+						<label for="purchase-name">Last name</label>
+						<input type="text" name="purchase-last-name" id="purchase-last-name" placeholder="Enter your last name" required>
+					</div>
+					<div class="input-row">
+						<label for="purchase-email">Email</label>
+						<input type="email" name="purchase-email" id="purchase-email" placeholder="Enter your email" required>
+					</div>
+					<div class="input-row">
+						<label for="purchase-phone">Phone</label>
+						<input type="tel" name="purchase-phone" id="purchasephone" placeholder="Enter your phone number" required>
+					</div>
+					<div class="input-row">
+						<label for="purchase-address">Address</label>
+						<input type="text" name="purchase-address" id="purchase-address" placeholder="Enter your address" required>
+					</div>
+					<div class="input-row">
+						<label for="purchase-license-type">License Type</label>
+						<input type="text" name="purchase-license-type" id="purchase-license-type" value="Class ${className}" readonly>
+					</div>
+					<div class="input-row">
+						<label for="purchase-license-price">License Price</label>
+						<input type="text" name="purchase-license-price" id="purchase-license-price" value="${price}" readonly>
+					</div>
+					<div class="input-row">
+						<label for="purchase-license-password">Password</label>
+						<input type="password" name="purchase-license-password" id="purchase-license-password" placeholder="Enter a password" required>
+					</div>
+					<button id="confirm-btn" class="pricing-btn">Confirm purchase</button>`
+				);
+			}
+		});
 	});
+
+$("#confirm-btn").click(function (e) {
+	e.preventDefault();
+	// get form data
+	let firstName = $("#purchase-first-name").val();
+	let lastName = $("#purchase-last-name").val();
+	let email = $("#purchase-email").val();
+	let password = $("#purchase-license-password").val();
+	let phoneNo = $("#purchase-phone").val();
+	let courseBought = $("#purchase-license-type").val();
+	let licensePrice = $("#purchase-license-price").val();
+	let address = $("#purchase-address").val();
+
+	var jsondata = {
+		firstName: firstName,
+		lastName: lastName,
+		password: password,
+		email: email,
+		phoneNo: phoneNo,
+		courseBought: courseBought,
+		credits: licensePrice,
+		address: address,
+	};
+	var settings = {
+		async: true,
+		crossDomain: true,
+		url: "https://drivingfd-b6f9.restdb.io/rest/registeredusers",
+		method: "POST",
+		headers: {
+			"content-type": "application/json",
+			"x-apikey": restdbApiKey,
+			"cache-control": "no-cache",
+		},
+		processData: false,
+		data: JSON.stringify(jsondata),
+	};
+	$(".purchase-page .loading-page").toggle();
+	$.ajax(settings).done(function (response) {
+		// show purchase confirmation
+		$(".purchase-page").toggle();
+		$(".purchase-confirmation").toggle();
+	});
+});
+
+$(".back-btn").click(function () {
+	// hide purchase confirmation
+	$(".purchase-confirmation").toggle();
+	// show homepage
+	$("#login").toggle();
+	toggleLinks();
+});
 
 // #contact-us
 $("<section>", { class: "section", id: "contact-us" })
@@ -577,7 +697,7 @@ $("<div>", { class: "input-row", id: "input-row-phone" }).appendTo(
 $("<input>", {
 	type: "tel",
 	name: "phone",
-	placeholder: "Phone number (optional)",
+	placeholder: "Phone number",
 }).appendTo("#input-row-phone");
 
 $("<div>", { class: "input-row", id: "input-row-message" }).appendTo(
@@ -612,7 +732,7 @@ $("#submit-btn").click(function (e) {
 		$(".error-message").text("Please enter a valid email address");
 		return;
 	}
-	if (name && email && message) {
+	if (name && email && phone && message) {
 		var data = {
 			name: name,
 			email: email,

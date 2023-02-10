@@ -297,6 +297,7 @@ ul {
 	color: var(--primary-font-color);
 	font-weight: bold;
 	width: 90%;
+	max-width: 1500px;
 	margin: auto;
 }
 
@@ -501,10 +502,22 @@ p.slogan {
 	height: 100%;
 }
 
-.license-list {
+.purchase-page,
+.purchase-confirmation {
 	width: 90%;
+	max-width: 500px;
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.license-list {
+	width: 90%;
+	max-width: 500px;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
 	position: relative;
 }
 
@@ -576,6 +589,32 @@ p.slogan {
 
 .side-note {
 	font-size: 0.8em;
+}
+
+#purchase-form .input-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#purchase-form .input-row label {
+	margin-bottom: 0.5em;
+}
+
+#purchase-form .input-row input {
+	flex-basis: 60%;
+	text-align: left;
+	padding: 0.5em 0;
+}
+
+#purchase-form .input-row input:not(:first-child) {
+	margin-bottom: 0.5em;
+}
+
+#purchase-form .confirm-btn {
+	margin-top: 2em;
+	width: 100%;
 }
 
 /* contact */
@@ -923,5 +962,33 @@ i {
 
 	.login-form {
 		background-color: transparent;
+	}
+}
+
+@media (min-width: 1500px) {
+	#top {
+		position: relative;
+	}
+
+	p.slogan {
+		font-size: 4em;
+		max-width: 50%;
+		margin-top: 0;
+		position: absolute;
+		top: 30%;
+	}
+
+	#pricing {
+		font-size: 1.5em;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.license-list {
+		width: fit-content;
+	}
+
+	.license-heading {
+		font-size: 1.3em;
 	}
 }
